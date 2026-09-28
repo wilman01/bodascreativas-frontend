@@ -49,7 +49,7 @@ export default function Login() {
 
       <section className="flex items-center justify-center p-6 sm:p-12">
         <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-5">
-          <img src="/logo.png" alt="Bodas Creativas" className="mx-auto h-16 w-16 rounded-full object-cover lg:hidden" />
+          <img src="/logo.png" alt="Bodas Creativas" className="mx-auto h-28 w-28 rounded-full object-cover lg:hidden" />
 
           <div>
             <h2 className="font-display text-3xl font-semibold text-ink-900">Iniciar sesión</h2>
@@ -104,12 +104,6 @@ export default function Login() {
           <button type="submit" className="btn-primary w-full" disabled={loading}>
             {loading ? 'Ingresando...' : 'Ingresar'}
           </button>
-
-          <p className="rounded-xl bg-brand-50 px-4 py-3 text-center text-xs text-ink-700/70">
-            Demo — Planner: <strong>planner@bodascreativas.com</strong> / planner123
-            <br />
-            Pareja: <strong>pareja@bodascreativas.com</strong> / pareja123
-          </p>
         </form>
       </section>
     </main>
