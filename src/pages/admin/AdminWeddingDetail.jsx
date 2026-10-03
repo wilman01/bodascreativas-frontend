@@ -204,7 +204,7 @@ export default function AdminWeddingDetail() {
     return (
       <div className="min-h-screen bg-brand-50">
         <Navbar />
-        <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-ink-700/60">Cargando boda...</p>
+        <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-600">Cargando boda...</p>
       </div>
     );
   }
@@ -231,7 +231,7 @@ export default function AdminWeddingDetail() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h1 className="font-display text-3xl font-semibold text-ink-900">{wedding.coupleNames}</h1>
-              <p className="text-sm text-ink-700/60">
+              <p className="text-sm text-slate-600">
                 {formatDate(wedding.weddingDate)} · {wedding.venue || 'Lugar por definir'}
                 {wedding.city ? ` · ${wedding.city}` : ''}
               </p>
@@ -255,7 +255,7 @@ export default function AdminWeddingDetail() {
               className={`-mb-px border-b-2 px-4 py-2 text-sm font-semibold transition ${
                 tab === item.id
                   ? 'border-brand-600 text-brand-700'
-                  : 'border-transparent text-ink-700/60 hover:text-ink-800'
+                  : 'border-transparent text-slate-600 hover:text-ink-800'
               }`}
             >
               {item.label}
@@ -268,30 +268,30 @@ export default function AdminWeddingDetail() {
           <section className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
             <div className="space-y-3">
               {tasks.length === 0 && (
-                <p className="card text-sm text-ink-700/60">Sin tareas. Crea la primera.</p>
+                <p className="card text-sm text-slate-600">Sin tareas. Crea la primera.</p>
               )}
               {tasks.map((task) => (
                 <div key={task.id} className="card flex items-start gap-3">
                   <input
                     type="checkbox"
-                    className="mt-1 h-5 w-5 accent-brand-600"
+                    className="mt-1 h-5 w-5 cursor-pointer accent-brand-600"
                     checked={task.isCompleted}
                     onChange={() => toggleTask(task.id)}
                   />
                   <div className="flex-1">
-                    <p className={`font-medium ${task.isCompleted ? 'text-ink-700/50 line-through' : 'text-ink-900'}`}>
+                    <p className={`font-medium ${task.isCompleted ? 'text-slate-500 line-through' : 'text-ink-900'}`}>
                       {task.title}
                     </p>
                     {task.description && (
-                      <p className="text-sm text-ink-700/60">{task.description}</p>
+                      <p className="text-sm text-slate-600">{task.description}</p>
                     )}
-                    <p className="mt-1 text-xs text-ink-700/50">
+                    <p className="mt-1 text-xs text-slate-500">
                       {task.category} · {task.dueDate ? formatDate(task.dueDate) : 'Sin fecha límite'}
                     </p>
                   </div>
                   <button
                     type="button"
-                    className="text-xs font-semibold text-red-600 hover:underline"
+                    className="rounded-lg px-2 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 hover:underline"
                     onClick={() => deleteTask(task.id)}
                   >
                     Eliminar
@@ -302,32 +302,48 @@ export default function AdminWeddingDetail() {
 
             <form onSubmit={createTask} className="card h-fit space-y-3">
               <h2 className="font-display text-xl font-semibold">Nueva tarea</h2>
-              <input
-                className="input"
-                placeholder="Título"
-                value={taskForm.title}
-                onChange={(e) => setTaskForm((p) => ({ ...p, title: e.target.value }))}
-                required
-              />
-              <textarea
-                className="input"
-                rows="2"
-                placeholder="Descripción (opcional)"
-                value={taskForm.description}
-                onChange={(e) => setTaskForm((p) => ({ ...p, description: e.target.value }))}
-              />
-              <input
-                className="input"
-                placeholder="Categoría"
-                value={taskForm.category}
-                onChange={(e) => setTaskForm((p) => ({ ...p, category: e.target.value }))}
-              />
-              <input
-                type="date"
-                className="input"
-                value={taskForm.dueDate}
-                onChange={(e) => setTaskForm((p) => ({ ...p, dueDate: e.target.value }))}
-              />
+              <div>
+                <label className="label" htmlFor="task-title">Título</label>
+                <input
+                  id="task-title"
+                  className="input"
+                  placeholder="Ej. Confirmar el banquete"
+                  value={taskForm.title}
+                  onChange={(e) => setTaskForm((p) => ({ ...p, title: e.target.value }))}
+                  required
+                />
+              </div>
+              <div>
+                <label className="label" htmlFor="task-description">Descripción (opcional)</label>
+                <textarea
+                  id="task-description"
+                  className="input"
+                  rows="2"
+                  placeholder="Detalles o notas"
+                  value={taskForm.description}
+                  onChange={(e) => setTaskForm((p) => ({ ...p, description: e.target.value }))}
+                />
+              </div>
+              <div>
+                <label className="label" htmlFor="task-category">Categoría</label>
+                <input
+                  id="task-category"
+                  className="input"
+                  placeholder="Ej. Banquete, Música, Vestuario"
+                  value={taskForm.category}
+                  onChange={(e) => setTaskForm((p) => ({ ...p, category: e.target.value }))}
+                />
+              </div>
+              <div>
+                <label className="label" htmlFor="task-dueDate">Fecha límite</label>
+                <input
+                  id="task-dueDate"
+                  type="date"
+                  className="input"
+                  value={taskForm.dueDate}
+                  onChange={(e) => setTaskForm((p) => ({ ...p, dueDate: e.target.value }))}
+                />
+              </div>
               <button type="submit" className="btn-primary w-full">Agregar tarea</button>
             </form>
           </section>
@@ -338,13 +354,13 @@ export default function AdminWeddingDetail() {
           <section className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
             <div className="space-y-3">
               {documents.length === 0 && (
-                <p className="card text-sm text-ink-700/60">Aún no hay documentos.</p>
+                <p className="card text-sm text-slate-600">Aún no hay documentos.</p>
               )}
               {documents.map((doc) => (
                 <div key={doc.id} className="card flex items-center justify-between gap-3">
                   <div>
                     <p className="font-medium text-ink-900">{doc.title}</p>
-                    <p className="text-xs text-ink-700/50">
+                    <p className="text-xs text-slate-500">
                       {doc.category} · {formatBytes(doc.fileSize)} · {formatDate(doc.createdAt)}
                     </p>
                   </div>
@@ -354,7 +370,7 @@ export default function AdminWeddingDetail() {
                     </button>
                     <button
                       type="button"
-                      className="text-xs font-semibold text-red-600 hover:underline"
+                      className="rounded-lg px-2 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 hover:underline"
                       onClick={() => deleteDocument(doc.id)}
                     >
                       Eliminar
@@ -366,30 +382,42 @@ export default function AdminWeddingDetail() {
 
             <form onSubmit={uploadDocument} className="card h-fit space-y-3">
               <h2 className="font-display text-xl font-semibold">Subir documento</h2>
-              <input
-                className="input"
-                placeholder="Título (opcional)"
-                value={docForm.title}
-                onChange={(e) => setDocForm((p) => ({ ...p, title: e.target.value }))}
-              />
-              <select
-                className="input"
-                value={docForm.category}
-                onChange={(e) => setDocForm((p) => ({ ...p, category: e.target.value }))}
-              >
-                <option value="contract">Contrato</option>
-                <option value="budget">Presupuesto</option>
-                <option value="invoice">Factura</option>
-                <option value="menu">Menú</option>
-                <option value="other">Otro</option>
-              </select>
-              <input
-                type="file"
-                className="input"
-                accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.zip"
-                onChange={(e) => setDocForm((p) => ({ ...p, file: e.target.files?.[0] || null }))}
-                required
-              />
+              <div>
+                <label className="label" htmlFor="doc-title">Título (opcional)</label>
+                <input
+                  id="doc-title"
+                  className="input"
+                  placeholder="Ej. Contrato de salón"
+                  value={docForm.title}
+                  onChange={(e) => setDocForm((p) => ({ ...p, title: e.target.value }))}
+                />
+              </div>
+              <div>
+                <label className="label" htmlFor="doc-category">Categoría</label>
+                <select
+                  id="doc-category"
+                  className="input"
+                  value={docForm.category}
+                  onChange={(e) => setDocForm((p) => ({ ...p, category: e.target.value }))}
+                >
+                  <option value="contract">Contrato</option>
+                  <option value="budget">Presupuesto</option>
+                  <option value="invoice">Factura</option>
+                  <option value="menu">Menú</option>
+                  <option value="other">Otro</option>
+                </select>
+              </div>
+              <div>
+                <label className="label" htmlFor="doc-file">Archivo *</label>
+                <input
+                  id="doc-file"
+                  type="file"
+                  className="input"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.zip"
+                  onChange={(e) => setDocForm((p) => ({ ...p, file: e.target.files?.[0] || null }))}
+                  required
+                />
+              </div>
               <button type="submit" className="btn-primary w-full">Subir</button>
             </form>
           </section>
@@ -400,18 +428,18 @@ export default function AdminWeddingDetail() {
           <section className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
             <div className="space-y-6">
               {albums.length === 0 && (
-                <p className="card text-sm text-ink-700/60">Crea un álbum para agrupar las fotos.</p>
+                <p className="card text-sm text-slate-600">Crea un álbum para agrupar las fotos.</p>
               )}
               {albums.map((album) => (
                 <div key={album.id} className="card">
                   <div className="mb-3">
                     <h3 className="font-display text-xl font-semibold text-ink-900">{album.name}</h3>
                     {album.description && (
-                      <p className="text-sm text-ink-700/60">{album.description}</p>
+                      <p className="text-sm text-slate-600">{album.description}</p>
                     )}
                   </div>
                   {(album.photos || []).length === 0 ? (
-                    <p className="text-sm text-ink-700/50">Álbum vacío.</p>
+                    <p className="text-sm text-slate-500">Álbum vacío.</p>
                   ) : (
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                       {album.photos.map((photo) => (
@@ -419,6 +447,8 @@ export default function AdminWeddingDetail() {
                           <img
                             src={resolveFileUrl(photo.filePath)}
                             alt={photo.caption || photo.fileName}
+                            loading="lazy"
+                            decoding="async"
                             className="h-32 w-full cursor-zoom-in object-cover transition group-hover:scale-105"
                             onClick={() =>
                               setLightboxIndex(allPhotos.findIndex((p) => p.id === photo.id))
@@ -426,7 +456,8 @@ export default function AdminWeddingDetail() {
                           />
                           <button
                             type="button"
-                            className="absolute right-1 top-1 hidden rounded-full bg-white/90 px-2 py-0.5 text-xs font-semibold text-red-600 group-hover:block"
+                            aria-label="Eliminar foto"
+                            className="absolute right-1 top-1 flex rounded-full bg-white/90 px-2 py-1.5 text-xs font-semibold text-red-600 shadow-sm transition hover:bg-white hover:text-red-700"
                             onClick={() => deletePhoto(photo.id)}
                           >
                             ×
@@ -442,43 +473,59 @@ export default function AdminWeddingDetail() {
             <div className="space-y-6">
               <form onSubmit={createAlbum} className="card space-y-3">
                 <h2 className="font-display text-xl font-semibold">Nuevo álbum</h2>
-                <input
-                  className="input"
-                  placeholder="Nombre (ej. Sesión Pre-boda)"
-                  value={albumForm.name}
-                  onChange={(e) => setAlbumForm((p) => ({ ...p, name: e.target.value }))}
-                  required
-                />
-                <textarea
-                  className="input"
-                  rows="2"
-                  placeholder="Descripción"
-                  value={albumForm.description}
-                  onChange={(e) => setAlbumForm((p) => ({ ...p, description: e.target.value }))}
-                />
+                <div>
+                  <label className="label" htmlFor="album-name">Nombre *</label>
+                  <input
+                    id="album-name"
+                    className="input"
+                    placeholder="Ej. Sesión Pre-boda"
+                    value={albumForm.name}
+                    onChange={(e) => setAlbumForm((p) => ({ ...p, name: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="label" htmlFor="album-description">Descripción</label>
+                  <textarea
+                    id="album-description"
+                    className="input"
+                    rows="2"
+                    placeholder="Notas sobre el álbum"
+                    value={albumForm.description}
+                    onChange={(e) => setAlbumForm((p) => ({ ...p, description: e.target.value }))}
+                  />
+                </div>
                 <button type="submit" className="btn-primary w-full">Crear álbum</button>
               </form>
 
               <form onSubmit={uploadPhotos} className="card space-y-3">
                 <h2 className="font-display text-xl font-semibold">Subir fotos</h2>
-                <select
-                  className="input"
-                  value={photoForm.albumId}
-                  onChange={(e) => setPhotoForm((p) => ({ ...p, albumId: e.target.value }))}
-                >
-                  <option value="">Sin álbum</option>
-                  {albums.map((album) => (
-                    <option key={album.id} value={album.id}>{album.name}</option>
-                  ))}
-                </select>
-                <input
-                  type="file"
-                  className="input"
-                  accept="image/*"
-                  multiple
-                  onChange={(e) => setPhotoForm((p) => ({ ...p, files: e.target.files }))}
-                  required
-                />
+                <div>
+                  <label className="label" htmlFor="photo-album">Álbum</label>
+                  <select
+                    id="photo-album"
+                    className="input"
+                    value={photoForm.albumId}
+                    onChange={(e) => setPhotoForm((p) => ({ ...p, albumId: e.target.value }))}
+                  >
+                    <option value="">Sin álbum</option>
+                    {albums.map((album) => (
+                      <option key={album.id} value={album.id}>{album.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="label" htmlFor="photo-files">Fotos *</label>
+                  <input
+                    id="photo-files"
+                    type="file"
+                    className="input"
+                    accept="image/*"
+                    multiple
+                    onChange={(e) => setPhotoForm((p) => ({ ...p, files: e.target.files }))}
+                    required
+                  />
+                </div>
                 <button type="submit" className="btn-primary w-full">Subir fotos</button>
               </form>
             </div>

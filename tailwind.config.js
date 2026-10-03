@@ -5,16 +5,26 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#fdf6f3',
-          100: '#fbe8e1',
-          200: '#f6cfc2',
-          300: '#eeab95',
-          400: '#e47d5f',
-          500: '#d95d3b',
-          600: '#c44529',
-          700: '#a33721',
-          800: '#86311f',
-          900: '#6f2c1e',
+          50: '#fdf2f8',
+          100: '#fce7f3',
+          200: '#fbcfe8',
+          300: '#f9a8d4',
+          400: '#f472b6',
+          500: '#ec4899',
+          600: '#db2777',
+          700: '#be185d',
+          800: '#9d174d',
+          900: '#831843',
+        },
+        gold: {
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#ca8a04',
+          700: '#a16207',
+          800: '#854d0e',
         },
         ink: {
           700: '#3b3540',
@@ -23,7 +33,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['"Cormorant Garamond"', 'serif'],
+        display: ['"Cormorant Infant"', 'serif'],
+        script: ['"Great Vibes"', 'cursive'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {

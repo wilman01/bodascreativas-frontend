@@ -23,7 +23,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <div className="hidden text-right sm:block">
             <p className="text-sm font-semibold text-ink-800">{user?.name}</p>
-            <p className="text-xs text-ink-700/60">
+            <p className="text-xs text-slate-600">
               {isAdmin ? 'Wedding Planner' : 'Pareja'}
             </p>
           </div>

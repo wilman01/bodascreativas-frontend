@@ -34,17 +34,18 @@ export default function Login() {
 
   return (
     <main className="grid min-h-screen lg:grid-cols-2">
-      <section className="relative hidden flex-col justify-between bg-gradient-to-br from-brand-500 via-brand-600 to-ink-900 p-12 text-white lg:flex">
-        <img src="/logo.png" alt="Bodas Creativas" className="h-14 w-14 rounded-full object-cover ring-2 ring-white/50" />
+      <section className="relative hidden flex-col justify-between bg-gradient-to-br from-brand-500 via-brand-600 to-brand-900 p-12 text-white lg:flex">
+        <img src="/logo.png" alt="Bodas Creativas" className="h-14 w-14 rounded-full object-cover ring-2 ring-gold-300/70" />
         <div>
-          <h1 className="font-display text-5xl font-semibold leading-tight">
+          <p className="font-script text-3xl text-gold-300">¡Felicitaciones, pareja!</p>
+          <h1 className="mt-2 font-display text-5xl font-semibold leading-tight">
             Cada boda, una historia distinta.
           </h1>
           <p className="mt-4 max-w-md text-white/80">
             Organiza avances, documentos y galerías de cada pareja desde un único panel.
           </p>
         </div>
-        <p className="text-sm text-white/60">© {new Date().getFullYear()} Bodas Creativas</p>
+        <p className="text-sm text-white/80">© {new Date().getFullYear()} Bodas Creativas</p>
       </section>
 
       <section className="flex items-center justify-center p-6 sm:p-12">
@@ -53,7 +54,7 @@ export default function Login() {
 
           <div>
             <h2 className="font-display text-3xl font-semibold text-ink-900">Iniciar sesión</h2>
-            <p className="mt-1 text-sm text-ink-700/60">
+            <p className="mt-1 text-sm text-slate-600">
               Accede con tu cuenta de planner o de pareja.
             </p>
           </div>
@@ -93,7 +94,7 @@ export default function Login() {
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-3 text-xs font-semibold text-brand-600"
+                className="absolute inset-y-0 right-2 my-auto h-9 rounded-lg px-3 text-xs font-semibold text-brand-600 hover:bg-brand-50"
                 onClick={() => setShowPassword((v) => !v)}
               >
                 {showPassword ? 'Ocultar' : 'Ver'}

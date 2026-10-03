@@ -4,12 +4,12 @@ export function ProgressBar({ value = 0, showLabel = true }) {
     <div>
       <div className="h-2.5 w-full overflow-hidden rounded-full bg-brand-100">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600 transition-all"
+          className="h-full rounded-full bg-gradient-to-r from-brand-400 via-brand-500 to-gold-500 transition-all"
           style={{ width: `${safe}%` }}
         />
       </div>
       {showLabel && (
-        <p className="mt-1 text-right text-xs font-medium text-ink-700/70">{safe}% completado</p>
+        <p className="mt-1 text-right text-xs font-medium text-slate-600">{safe}% completado</p>
       )}
     </div>
   );

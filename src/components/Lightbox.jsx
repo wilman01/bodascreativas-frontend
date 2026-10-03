@@ -24,7 +24,7 @@ export default function Lightbox({ photos, index, onClose, onNavigate }) {
     >
       <button
         type="button"
-        className="absolute right-5 top-5 text-2xl text-white/80 hover:text-white"
+        className="absolute right-5 top-5 p-2 text-3xl leading-none text-white/80 hover:text-white"
         onClick={onClose}
         aria-label="Cerrar"
       >
@@ -33,7 +33,7 @@ export default function Lightbox({ photos, index, onClose, onNavigate }) {
 
       <button
         type="button"
-        className="absolute left-4 text-4xl text-white/70 hover:text-white"
+        className="absolute left-4 flex h-12 w-12 items-center justify-center rounded-full text-4xl text-white/70 hover:bg-white/10 hover:text-white"
         onClick={(e) => {
           e.stopPropagation();
           onNavigate((index - 1 + photos.length) % photos.length);
@@ -56,7 +56,7 @@ export default function Lightbox({ photos, index, onClose, onNavigate }) {
 
       <button
         type="button"
-        className="absolute right-4 text-4xl text-white/70 hover:text-white"
+        className="absolute right-4 flex h-12 w-12 items-center justify-center rounded-full text-4xl text-white/70 hover:bg-white/10 hover:text-white"
         onClick={(e) => {
           e.stopPropagation();
           onNavigate((index + 1) % photos.length);

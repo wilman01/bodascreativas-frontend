@@ -90,7 +90,7 @@ export default function AdminDashboard() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="font-display text-3xl font-semibold text-ink-900">Panel del Planner</h1>
-            <p className="text-sm text-ink-700/60">
+            <p className="text-sm text-slate-600">
               Gestiona todas las bodas, tareas, documentos y galerías.
             </p>
           </div>
@@ -101,15 +101,15 @@ export default function AdminDashboard() {
 
         <section className="mt-6 grid gap-4 sm:grid-cols-3">
           <article className="card">
-            <p className="text-xs uppercase tracking-wide text-ink-700/50">Bodas activas</p>
+            <p className="text-xs uppercase tracking-wide text-slate-600">Bodas activas</p>
             <p className="mt-1 font-display text-4xl font-semibold text-ink-900">{totalCouples}</p>
           </article>
           <article className="card">
-            <p className="text-xs uppercase tracking-wide text-ink-700/50">Progreso promedio</p>
+            <p className="text-xs uppercase tracking-wide text-slate-600">Progreso promedio</p>
             <p className="mt-1 font-display text-4xl font-semibold text-brand-600">{avgProgress}%</p>
           </article>
           <article className="card">
-            <p className="text-xs uppercase tracking-wide text-ink-700/50">Confirmadas</p>
+            <p className="text-xs uppercase tracking-wide text-slate-600">Confirmadas</p>
             <p className="mt-1 font-display text-4xl font-semibold text-emerald-600">
               {weddings.filter((w) => w.status === 'confirmed').length}
             </p>
@@ -178,9 +178,9 @@ export default function AdminDashboard() {
           <h2 className="font-display text-2xl font-semibold text-ink-900">Mis bodas</h2>
 
           {loading ? (
-            <p className="mt-4 text-sm text-ink-700/60">Cargando bodas...</p>
+            <p className="mt-4 text-sm text-slate-600">Cargando bodas...</p>
           ) : weddings.length === 0 ? (
-            <div className="card mt-4 text-sm text-ink-700/60">
+            <div className="card mt-4 text-sm text-slate-600">
               Aún no tienes bodas registradas. Crea la primera para comenzar.
             </div>
           ) : (
@@ -192,7 +192,7 @@ export default function AdminDashboard() {
                       <h3 className="font-display text-xl font-semibold text-ink-900">
                         {wedding.coupleNames}
                       </h3>
-                      <p className="text-xs text-ink-700/60">
+                      <p className="text-xs text-slate-600">
                         {formatDate(wedding.weddingDate)} · {wedding.venue || 'Lugar por definir'}
                       </p>
                     </div>
@@ -201,7 +201,7 @@ export default function AdminDashboard() {
 
                   <ProgressBar value={wedding.percentage} />
 
-                  <p className="text-xs text-ink-700/60">
+                  <p className="text-xs text-slate-600">
                     {wedding.done}/{wedding.total} tareas completadas
                   </p>
 
