@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api, { formatDate } from '../../api/client';
-import Navbar from '../../components/Navbar.jsx';
 import { ProgressBar, StatusBadge } from '../../components/ProgressBar.jsx';
 
 const emptyForm = {
@@ -84,8 +83,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-brand-50">
-      <Navbar />
-
       <main className="mx-auto max-w-6xl px-4 py-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>

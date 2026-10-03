@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import api, { formatBytes, formatDate, resolveFileUrl } from '../../api/client';
-import Navbar from '../../components/Navbar.jsx';
 import { ProgressBar, StatusBadge } from '../../components/ProgressBar.jsx';
 import Lightbox from '../../components/Lightbox.jsx';
 
@@ -203,7 +202,6 @@ export default function AdminWeddingDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-brand-50">
-        <Navbar />
         <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-600">Cargando boda...</p>
       </div>
     );
@@ -212,7 +210,6 @@ export default function AdminWeddingDetail() {
   if (!wedding) {
     return (
       <div className="min-h-screen bg-brand-50">
-        <Navbar />
         <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-red-600">{error || 'Boda no encontrada.'}</p>
       </div>
     );
@@ -220,8 +217,6 @@ export default function AdminWeddingDetail() {
 
   return (
     <div className="min-h-screen bg-brand-50">
-      <Navbar />
-
       <main className="mx-auto max-w-6xl px-4 py-8">
         <Link to="/admin" className="text-sm font-medium text-brand-600 hover:underline">
           ← Volver al panel

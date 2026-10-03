@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import api, { formatBytes, formatDate, resolveFileUrl } from '../../api/client';
-import Navbar from '../../components/Navbar.jsx';
 import { ProgressBar, StatusBadge } from '../../components/ProgressBar.jsx';
 import Lightbox from '../../components/Lightbox.jsx';
 
@@ -78,8 +77,6 @@ export default function ClientWeddingDetail() {
 
   return (
     <div className="min-h-screen bg-brand-50">
-      <Navbar />
-
       <main className="mx-auto max-w-6xl px-4 py-8">
         <Link to="/mi-boda" className="text-sm font-medium text-brand-600 hover:underline">
           ← Volver

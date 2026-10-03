@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import DashboardLayout from './components/DashboardLayout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 import Login from './pages/Login.jsx';
 import NotFound from './pages/NotFound.jsx';
@@ -23,56 +24,51 @@ export default function App() {
       <Route path="/" element={<RootRedirect />} />
       <Route path="/login" element={<Login />} />
 
-      <Route
-        path="/perfil"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
+      <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+        <Route path="/perfil" element={<Profile />} />
 
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminDashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin/bodas/:id"
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminWeddingDetail />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin/usuarios"
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminUsers />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/bodas/:id"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminWeddingDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/usuarios"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminUsers />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path="/mi-boda"
-        element={
-          <ProtectedRoute allowedRoles={['client']}>
-            <ClientDashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/mi-boda/:id"
-        element={
-          <ProtectedRoute allowedRoles={['client']}>
-            <ClientWeddingDetail />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/mi-boda"
+          element={
+            <ProtectedRoute allowedRoles={['client']}>
+              <ClientDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mi-boda/:id"
+          element={
+            <ProtectedRoute allowedRoles={['client']}>
+              <ClientWeddingDetail />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
 
       <Route path="*" element={<NotFound />} />
     </Routes>

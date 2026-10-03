@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import api from '../api/client';
-import Navbar from '../components/Navbar.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 
 const ROLE_LABEL = { admin: 'Wedding Planner', client: 'Pareja' };
@@ -64,8 +63,6 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-brand-50">
-      <Navbar />
-
       <main className="mx-auto max-w-3xl px-4 py-8">
         <h1 className="font-display text-3xl font-semibold text-ink-900">Mi perfil</h1>
         <p className="text-sm text-slate-600">

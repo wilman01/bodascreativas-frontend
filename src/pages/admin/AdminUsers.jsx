@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import api from '../../api/client';
-import Navbar from '../../components/Navbar.jsx';
 
 const emptyForm = { name: '', email: '', phone: '', role: 'client', password: '' };
 
@@ -124,8 +123,6 @@ export default function AdminUsers() {
 
   return (
     <div className="min-h-screen bg-brand-50">
-      <Navbar />
-
       <main className="mx-auto max-w-4xl px-4 py-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
