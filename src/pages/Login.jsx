@@ -34,18 +34,18 @@ export default function Login() {
 
   return (
     <main className="grid min-h-screen lg:grid-cols-2">
-      <section className="relative hidden flex-col justify-between bg-gradient-to-br from-brand-500 via-brand-600 to-brand-900 p-12 text-white lg:flex">
+      <section className="relative hidden flex-col justify-between bg-gradient-to-br from-brand-600 via-brand-700 to-brand-900 p-12 text-white lg:flex">
         <img src="/logo.png" alt="Bodas Creativas" className="h-14 w-14 rounded-full object-cover ring-2 ring-gold-300/70" />
         <div>
-          <p className="font-script text-3xl text-gold-300">¡Felicitaciones, pareja!</p>
+          <p className="font-script text-3xl text-gold-200">¡Felicitaciones, pareja!</p>
           <h1 className="mt-2 font-display text-5xl font-semibold leading-tight">
             Cada boda, una historia distinta.
           </h1>
-          <p className="mt-4 max-w-md text-white/80">
+          <p className="mt-4 max-w-md text-white/90">
             Organiza avances, documentos y galerías de cada pareja desde un único panel.
           </p>
         </div>
-        <p className="text-sm text-white/80">© {new Date().getFullYear()} Bodas Creativas</p>
+        <p className="text-sm text-white/90">© {new Date().getFullYear()} Bodas Creativas</p>
       </section>
 
       <section className="flex items-center justify-center p-6 sm:p-12">
@@ -94,6 +94,8 @@ export default function Login() {
               />
               <button
                 type="button"
+                aria-pressed={showPassword}
+                aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                 className="absolute inset-y-0 right-2 my-auto h-9 rounded-lg px-3 text-xs font-semibold text-brand-600 hover:bg-brand-50"
                 onClick={() => setShowPassword((v) => !v)}
               >

@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import api, { formatBytes, formatDate, resolveFileUrl } from '../../api/client';
 import { ProgressBar, StatusBadge } from '../../components/ProgressBar.jsx';
 import Lightbox from '../../components/Lightbox.jsx';
+import Tabs from '../../components/Tabs.jsx';
 
 const TABS = [
   { id: 'tasks', label: 'Avances' },
@@ -82,10 +83,10 @@ export default function ClientWeddingDetail() {
           ← Volver
         </Link>
 
-        {error && <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
+        {error && <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{error}</p>}
 
         {loading ? (
-          <p className="mt-6 text-sm text-slate-600">Cargando...</p>
+          <p className="mt-6 text-sm text-slate-600" role="status">Cargando...</p>
         ) : wedding ? (
           <>
             <header className="card mt-3">
@@ -106,25 +107,10 @@ export default function ClientWeddingDetail() {
               </div>
             </header>
 
-            <nav className="mt-6 flex gap-2 border-b border-brand-100">
-              {TABS.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setTab(item.id)}
-                  className={`-mb-px border-b-2 px-4 py-2 text-sm font-semibold transition ${
-                    tab === item.id
-                      ? 'border-brand-600 text-brand-700'
-                      : 'border-transparent text-slate-600 hover:text-ink-800'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
+            <Tabs tabs={TABS} active={tab} onChange={setTab} label="Secciones de la boda" className="mt-6" />
 
             {tab === 'tasks' && (
-              <section className="mt-6 grid gap-6 md:grid-cols-2">
+              <section role="tabpanel" id="panel-tasks" aria-labelledby="tab-tasks" className="mt-6 grid gap-6 md:grid-cols-2">
                 <div>
                   <h2 className="mb-3 font-display text-xl font-semibold text-ink-900">
                     Pendientes ({pending.length})
@@ -139,7 +125,7 @@ export default function ClientWeddingDetail() {
                         {task.description && (
                           <p className="text-sm text-slate-600">{task.description}</p>
                         )}
-                        <p className="mt-1 text-xs text-slate-500">
+                        <p className="mt-1 text-xs text-slate-600">
                           {task.dueDate ? `Vence: ${formatDate(task.dueDate)}` : 'Sin fecha límite'}
                         </p>
                       </div>
@@ -169,7 +155,7 @@ export default function ClientWeddingDetail() {
             )}
 
             {tab === 'documents' && (
-              <section className="mt-6 space-y-3">
+              <section role="tabpanel" id="panel-documents" aria-labelledby="tab-documents" className="mt-6 space-y-3">
                 {documents.length === 0 && (
                   <p className="card text-sm text-slate-600">Aún no hay documentos disponibles.</p>
                 )}
@@ -177,7 +163,7 @@ export default function ClientWeddingDetail() {
                   <div key={doc.id} className="card flex items-center justify-between gap-3">
                     <div>
                       <p className="font-medium text-ink-900">{doc.title}</p>
-                      <p className="text-xs text-slate-500">
+                      <p className="text-xs text-slate-600">
                         {doc.category} · {formatBytes(doc.fileSize)} · {formatDate(doc.createdAt)}
                       </p>
                     </div>
@@ -200,7 +186,7 @@ export default function ClientWeddingDetail() {
             )}
 
             {tab === 'gallery' && (
-              <section className="mt-6 space-y-6">
+              <section role="tabpanel" id="panel-gallery" aria-labelledby="tab-gallery" className="mt-6 space-y-6">
                 {albums.length === 0 && (
                   <p className="card text-sm text-slate-600">Aún no hay fotos publicadas.</p>
                 )}
@@ -213,21 +199,27 @@ export default function ClientWeddingDetail() {
                       )}
                     </div>
                     {(album.photos || []).length === 0 ? (
-                      <p className="text-sm text-slate-500">Álbum vacío.</p>
+                      <p className="text-sm text-slate-600">Álbum vacío.</p>
                     ) : (
                       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                         {album.photos.map((photo) => (
-                          <img
+                          <button
                             key={photo.id}
-                            src={resolveFileUrl(photo.filePath)}
-                            alt={photo.caption || photo.fileName}
-                            loading="lazy"
-                            decoding="async"
-                            className="h-36 w-full cursor-zoom-in rounded-xl object-cover transition hover:scale-[1.02]"
+                            type="button"
+                            className="block w-full cursor-zoom-in overflow-hidden rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
                             onClick={() =>
                               setLightboxIndex(allPhotos.findIndex((p) => p.id === photo.id))
                             }
-                          />
+                            aria-label={`Ver «${photo.caption || photo.fileName}» en tamaño completo`}
+                          >
+                            <img
+                              src={resolveFileUrl(photo.filePath)}
+                              alt={photo.caption || photo.fileName}
+                              loading="lazy"
+                              decoding="async"
+                              className="h-36 w-full object-cover transition hover:scale-[1.02]"
+                            />
+                          </button>
                         ))}
                       </div>
                     )}

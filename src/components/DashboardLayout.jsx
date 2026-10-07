@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useFocusTrap } from '../hooks/useFocusTrap.js';
 
 const ROLE_LABEL = { admin: 'Wedding Planner', client: 'Pareja' };
 
@@ -60,11 +61,11 @@ function SidebarContent({ onNavigate }) {
         <img src="/logo.png" alt="Bodas Creativas" className="h-10 w-10 rounded-full object-cover ring-2 ring-gold-300/50" />
         <div className="min-w-0">
           <p className="truncate font-display text-lg font-semibold leading-tight text-ink-900">Bodas Creativas</p>
-          <p className="text-[11px] font-medium text-slate-500">Planificacion de bodas</p>
+          <p className="text-xs font-medium text-slate-600">Planificación de bodas</p>
         </div>
       </div>
 
-      <nav aria-label="Menu principal" className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
+      <nav aria-label="Menú principal" className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
         {items.map((item) => (
           <NavLink
             key={item.to}
@@ -74,7 +75,7 @@ function SidebarContent({ onNavigate }) {
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition ${
                 isActive
-                  ? 'bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-soft'
+                  ? 'bg-gradient-to-r from-brand-700 to-brand-600 text-white shadow-soft'
                   : 'text-ink-700 hover:bg-brand-50 hover:text-ink-900'
               }`
             }
@@ -87,12 +88,12 @@ function SidebarContent({ onNavigate }) {
 
       <div className="border-t border-brand-100 p-3">
         <div className="flex items-center gap-3 rounded-xl px-2 py-2">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-gold-500 text-lg font-semibold text-white">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-700 to-brand-600 text-lg font-semibold text-white">
             {(user?.name || '?').charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-ink-900">{user?.name}</p>
-            <p className="text-xs text-slate-500">{ROLE_LABEL[user?.role] || user?.role}</p>
+            <p className="text-xs text-slate-600">{ROLE_LABEL[user?.role] || user?.role}</p>
           </div>
         </div>
         <button type="button" onClick={handleLogout} className="btn-ghost mt-2 w-full">
@@ -105,6 +106,8 @@ function SidebarContent({ onNavigate }) {
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+  const drawerRef = useRef(null);
+  useFocusTrap(open, drawerRef);
 
   useEffect(() => {
     const handler = (event) => {
@@ -116,6 +119,13 @@ export default function DashboardLayout() {
 
   return (
     <div className="min-h-screen bg-brand-50">
+      <a
+        href="#main-content"
+        className="sr-only z-50 focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-brand-700 focus:shadow-soft"
+      >
+        Saltar al contenido
+      </a>
+
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-brand-100 bg-white lg:flex">
         <SidebarContent />
       </aside>
@@ -123,7 +133,7 @@ export default function DashboardLayout() {
       <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-brand-100 bg-white/90 px-4 backdrop-blur lg:hidden">
         <button
           type="button"
-          aria-label="Abrir menu"
+          aria-label="Abrir menú"
           onClick={() => setOpen(true)}
           className="rounded-lg p-2 text-ink-800 hover:bg-brand-50"
         >
@@ -136,12 +146,16 @@ export default function DashboardLayout() {
       </header>
 
       {open && (
-        <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
-          <div className="absolute inset-0 bg-ink-900/60" onClick={() => setOpen(false)} />
-          <aside className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-white shadow-soft">
+        <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label="Menú">
+          <div className="absolute inset-0 bg-ink-900/60" onClick={() => setOpen(false)} aria-hidden="true" />
+          <aside
+            ref={drawerRef}
+            tabIndex={-1}
+            className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-white shadow-soft"
+          >
             <button
               type="button"
-              aria-label="Cerrar menu"
+              aria-label="Cerrar menú"
               onClick={() => setOpen(false)}
               className="absolute right-3 top-4 z-10 rounded-lg p-2 text-ink-800 hover:bg-brand-50"
             >
@@ -154,7 +168,7 @@ export default function DashboardLayout() {
         </div>
       )}
 
-      <div className="lg:pl-64">
+      <div id="main-content" tabIndex={-1} className="lg:pl-64">
         <Outlet />
       </div>
     </div>

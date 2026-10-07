@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import api, { formatBytes, formatDate, resolveFileUrl } from '../../api/client';
 import { ProgressBar, StatusBadge } from '../../components/ProgressBar.jsx';
 import Lightbox from '../../components/Lightbox.jsx';
+import Tabs from '../../components/Tabs.jsx';
+import ConfirmDialog from '../../components/ConfirmDialog.jsx';
 
 const TABS = [
   { id: 'tasks', label: 'Tareas' },
@@ -32,6 +34,14 @@ export default function AdminWeddingDetail() {
   const [docForm, setDocForm] = useState({ title: '', category: 'other', file: null });
   const [photoForm, setPhotoForm] = useState({ albumId: '', files: null });
   const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  const [savingTask, setSavingTask] = useState(false);
+  const [savingDoc, setSavingDoc] = useState(false);
+  const [savingAlbum, setSavingAlbum] = useState(false);
+  const [savingPhotos, setSavingPhotos] = useState(false);
+  const [busy, setBusy] = useState(null);
+  const [confirm, setConfirm] = useState(null);
+  const [confirmBusy, setConfirmBusy] = useState(false);
 
   const allPhotos = useMemo(
     () => albums.flatMap((album) => (album.photos || []).map((p) => ({ ...p, albumName: album.name }))),
@@ -77,12 +87,30 @@ export default function AdminWeddingDetail() {
 
   const flash = (message) => {
     setNotice(message);
+    setError('');
     setTimeout(() => setNotice(''), 3000);
+  };
+
+  const requestConfirm = (options) => setConfirm(options);
+
+  const runConfirm = async () => {
+    if (!confirm) return;
+    setConfirmBusy(true);
+    try {
+      await confirm.action();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setConfirmBusy(false);
+      setConfirm(null);
+    }
   };
 
   /* ------------------------------ TAREAS ------------------------------ */
   const createTask = async (event) => {
     event.preventDefault();
+    setSavingTask(true);
+    setError('');
     try {
       const payload = { ...taskForm };
       if (!payload.dueDate) delete payload.dueDate;
@@ -92,32 +120,44 @@ export default function AdminWeddingDetail() {
       flash('Tarea creada.');
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSavingTask(false);
     }
   };
 
-  const toggleTask = async (taskId) => {
+  const toggleTask = async (task) => {
+    setBusy(`task-${task.id}`);
+    setError('');
     try {
-      const { data } = await api.patch(`/weddings/${id}/tasks/${taskId}/toggle`);
-      setTasks((prev) => prev.map((t) => (t.id === taskId ? data.data : t)));
+      const { data } = await api.patch(`/weddings/${id}/tasks/${task.id}/toggle`);
+      setTasks((prev) => prev.map((t) => (t.id === task.id ? data.data : t)));
       setProgress(data.progress);
     } catch (err) {
       setError(err.message);
+    } finally {
+      setBusy(null);
     }
   };
 
-  const deleteTask = async (taskId) => {
-    try {
-      await api.delete(`/weddings/${id}/tasks/${taskId}`);
-      await loadTasks();
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  const deleteTask = (task) =>
+    requestConfirm({
+      title: 'Eliminar tarea',
+      message: `¿Seguro que deseas eliminar «${task.title}»? Esta acción no se puede deshacer.`,
+      confirmLabel: 'Eliminar',
+      danger: true,
+      action: async () => {
+        await api.delete(`/weddings/${id}/tasks/${task.id}`);
+        await loadTasks();
+        flash('Tarea eliminada.');
+      },
+    });
 
   /* ---------------------------- DOCUMENTOS ---------------------------- */
   const uploadDocument = async (event) => {
     event.preventDefault();
     if (!docForm.file) return;
+    setSavingDoc(true);
+    setError('');
     try {
       const body = new FormData();
       body.append('file', docForm.file);
@@ -130,17 +170,23 @@ export default function AdminWeddingDetail() {
       flash('Documento subido.');
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSavingDoc(false);
     }
   };
 
-  const deleteDocument = async (docId) => {
-    try {
-      await api.delete(`/weddings/${id}/documents/${docId}`);
-      await loadDocuments();
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  const deleteDocument = (doc) =>
+    requestConfirm({
+      title: 'Eliminar documento',
+      message: `¿Seguro que deseas eliminar «${doc.title}»?`,
+      confirmLabel: 'Eliminar',
+      danger: true,
+      action: async () => {
+        await api.delete(`/weddings/${id}/documents/${doc.id}`);
+        await loadDocuments();
+        flash('Documento eliminado.');
+      },
+    });
 
   const downloadDocument = async (doc) => {
     try {
@@ -163,6 +209,8 @@ export default function AdminWeddingDetail() {
   /* ------------------------------ GALERÍA ----------------------------- */
   const createAlbum = async (event) => {
     event.preventDefault();
+    setSavingAlbum(true);
+    setError('');
     try {
       await api.post(`/weddings/${id}/albums`, albumForm);
       setAlbumForm(emptyAlbum);
@@ -170,12 +218,16 @@ export default function AdminWeddingDetail() {
       flash('Álbum creado.');
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSavingAlbum(false);
     }
   };
 
   const uploadPhotos = async (event) => {
     event.preventDefault();
     if (!photoForm.files?.length) return;
+    setSavingPhotos(true);
+    setError('');
     try {
       const body = new FormData();
       Array.from(photoForm.files).forEach((file) => body.append('files', file));
@@ -187,22 +239,28 @@ export default function AdminWeddingDetail() {
       flash('Fotos subidas.');
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSavingPhotos(false);
     }
   };
 
-  const deletePhoto = async (photoId) => {
-    try {
-      await api.delete(`/weddings/${id}/photos/${photoId}`);
-      await loadGallery();
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  const deletePhoto = (photo) =>
+    requestConfirm({
+      title: 'Eliminar foto',
+      message: '¿Seguro que deseas eliminar esta foto?',
+      confirmLabel: 'Eliminar',
+      danger: true,
+      action: async () => {
+        await api.delete(`/weddings/${id}/photos/${photo.id}`);
+        await loadGallery();
+        flash('Foto eliminada.');
+      },
+    });
 
   if (loading) {
     return (
       <div className="min-h-screen bg-brand-50">
-        <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-600">Cargando boda...</p>
+        <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-600" role="status">Cargando boda...</p>
       </div>
     );
   }
@@ -210,7 +268,7 @@ export default function AdminWeddingDetail() {
   if (!wedding) {
     return (
       <div className="min-h-screen bg-brand-50">
-        <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-red-600">{error || 'Boda no encontrada.'}</p>
+        <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-red-600" role="alert">{error || 'Boda no encontrada.'}</p>
       </div>
     );
   }
@@ -238,29 +296,14 @@ export default function AdminWeddingDetail() {
           </div>
         </header>
 
-        {error && <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
-        {notice && <p className="mt-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{notice}</p>}
+        {error && <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{error}</p>}
+        {notice && <p className="mt-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700" role="status">{notice}</p>}
 
-        <nav className="mt-6 flex gap-2 border-b border-brand-100">
-          {TABS.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setTab(item.id)}
-              className={`-mb-px border-b-2 px-4 py-2 text-sm font-semibold transition ${
-                tab === item.id
-                  ? 'border-brand-600 text-brand-700'
-                  : 'border-transparent text-slate-600 hover:text-ink-800'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
+        <Tabs tabs={TABS} active={tab} onChange={setTab} label="Secciones de la boda" className="mt-6" />
 
         {/* ------------------------------ TAREAS ------------------------------ */}
         {tab === 'tasks' && (
-          <section className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
+          <section role="tabpanel" id="panel-tasks" aria-labelledby="tab-tasks" className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
             <div className="space-y-3">
               {tasks.length === 0 && (
                 <p className="card text-sm text-slate-600">Sin tareas. Crea la primera.</p>
@@ -268,26 +311,29 @@ export default function AdminWeddingDetail() {
               {tasks.map((task) => (
                 <div key={task.id} className="card flex items-start gap-3">
                   <input
+                    id={`task-${task.id}`}
                     type="checkbox"
-                    className="mt-1 h-5 w-5 cursor-pointer accent-brand-600"
+                    className="mt-1 h-5 w-5 cursor-pointer accent-brand-600 disabled:opacity-60"
                     checked={task.isCompleted}
-                    onChange={() => toggleTask(task.id)}
+                    onChange={() => toggleTask(task)}
+                    disabled={busy === `task-${task.id}`}
+                    aria-label={`Marcar «${task.title}» como ${task.isCompleted ? 'pendiente' : 'completada'}`}
                   />
                   <div className="flex-1">
-                    <p className={`font-medium ${task.isCompleted ? 'text-slate-500 line-through' : 'text-ink-900'}`}>
+                    <label htmlFor={`task-${task.id}`} className={`font-medium ${task.isCompleted ? 'text-slate-600 line-through' : 'text-ink-900'}`}>
                       {task.title}
-                    </p>
+                    </label>
                     {task.description && (
                       <p className="text-sm text-slate-600">{task.description}</p>
                     )}
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className="mt-1 text-xs text-slate-600">
                       {task.category} · {task.dueDate ? formatDate(task.dueDate) : 'Sin fecha límite'}
                     </p>
                   </div>
                   <button
                     type="button"
-                    className="rounded-lg px-2 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 hover:underline"
-                    onClick={() => deleteTask(task.id)}
+                    className="min-h-[44px] rounded-lg px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 hover:underline"
+                    onClick={() => deleteTask(task)}
                   >
                     Eliminar
                   </button>
@@ -339,14 +385,16 @@ export default function AdminWeddingDetail() {
                   onChange={(e) => setTaskForm((p) => ({ ...p, dueDate: e.target.value }))}
                 />
               </div>
-              <button type="submit" className="btn-primary w-full">Agregar tarea</button>
+              <button type="submit" className="btn-primary w-full" disabled={savingTask}>
+                {savingTask ? 'Agregando...' : 'Agregar tarea'}
+              </button>
             </form>
           </section>
         )}
 
         {/* ---------------------------- DOCUMENTOS ---------------------------- */}
         {tab === 'documents' && (
-          <section className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
+          <section role="tabpanel" id="panel-documents" aria-labelledby="tab-documents" className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
             <div className="space-y-3">
               {documents.length === 0 && (
                 <p className="card text-sm text-slate-600">Aún no hay documentos.</p>
@@ -355,7 +403,7 @@ export default function AdminWeddingDetail() {
                 <div key={doc.id} className="card flex items-center justify-between gap-3">
                   <div>
                     <p className="font-medium text-ink-900">{doc.title}</p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-slate-600">
                       {doc.category} · {formatBytes(doc.fileSize)} · {formatDate(doc.createdAt)}
                     </p>
                   </div>
@@ -365,8 +413,8 @@ export default function AdminWeddingDetail() {
                     </button>
                     <button
                       type="button"
-                      className="rounded-lg px-2 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 hover:underline"
-                      onClick={() => deleteDocument(doc.id)}
+                      className="min-h-[44px] rounded-lg px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 hover:underline"
+                      onClick={() => deleteDocument(doc)}
                     >
                       Eliminar
                     </button>
@@ -413,14 +461,16 @@ export default function AdminWeddingDetail() {
                   required
                 />
               </div>
-              <button type="submit" className="btn-primary w-full">Subir</button>
+              <button type="submit" className="btn-primary w-full" disabled={savingDoc}>
+                {savingDoc ? 'Subiendo...' : 'Subir'}
+              </button>
             </form>
           </section>
         )}
 
         {/* ------------------------------ GALERÍA ----------------------------- */}
         {tab === 'gallery' && (
-          <section className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
+          <section role="tabpanel" id="panel-gallery" aria-labelledby="tab-gallery" className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
             <div className="space-y-6">
               {albums.length === 0 && (
                 <p className="card text-sm text-slate-600">Crea un álbum para agrupar las fotos.</p>
@@ -434,26 +484,32 @@ export default function AdminWeddingDetail() {
                     )}
                   </div>
                   {(album.photos || []).length === 0 ? (
-                    <p className="text-sm text-slate-500">Álbum vacío.</p>
+                    <p className="text-sm text-slate-600">Álbum vacío.</p>
                   ) : (
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                       {album.photos.map((photo) => (
                         <figure key={photo.id} className="group relative overflow-hidden rounded-xl">
-                          <img
-                            src={resolveFileUrl(photo.filePath)}
-                            alt={photo.caption || photo.fileName}
-                            loading="lazy"
-                            decoding="async"
-                            className="h-32 w-full cursor-zoom-in object-cover transition group-hover:scale-105"
+                          <button
+                            type="button"
+                            className="block w-full cursor-zoom-in"
                             onClick={() =>
                               setLightboxIndex(allPhotos.findIndex((p) => p.id === photo.id))
                             }
-                          />
+                            aria-label={`Ver «${photo.caption || photo.fileName}» en tamaño completo`}
+                          >
+                            <img
+                              src={resolveFileUrl(photo.filePath)}
+                              alt={photo.caption || photo.fileName}
+                              loading="lazy"
+                              decoding="async"
+                              className="h-32 w-full object-cover transition group-hover:scale-105"
+                            />
+                          </button>
                           <button
                             type="button"
-                            aria-label="Eliminar foto"
-                            className="absolute right-1 top-1 flex rounded-full bg-white/90 px-2 py-1.5 text-xs font-semibold text-red-600 shadow-sm transition hover:bg-white hover:text-red-700"
-                            onClick={() => deletePhoto(photo.id)}
+                            aria-label={`Eliminar «${photo.caption || photo.fileName}»`}
+                            className="absolute right-1 top-1 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-base font-semibold text-red-600 shadow-sm transition hover:bg-white hover:text-red-700"
+                            onClick={() => deletePhoto(photo)}
                           >
                             ×
                           </button>
@@ -490,7 +546,9 @@ export default function AdminWeddingDetail() {
                     onChange={(e) => setAlbumForm((p) => ({ ...p, description: e.target.value }))}
                   />
                 </div>
-                <button type="submit" className="btn-primary w-full">Crear álbum</button>
+                <button type="submit" className="btn-primary w-full" disabled={savingAlbum}>
+                  {savingAlbum ? 'Creando...' : 'Crear álbum'}
+                </button>
               </form>
 
               <form onSubmit={uploadPhotos} className="card space-y-3">
@@ -521,7 +579,9 @@ export default function AdminWeddingDetail() {
                     required
                   />
                 </div>
-                <button type="submit" className="btn-primary w-full">Subir fotos</button>
+                <button type="submit" className="btn-primary w-full" disabled={savingPhotos}>
+                  {savingPhotos ? 'Subiendo...' : 'Subir fotos'}
+                </button>
               </form>
             </div>
           </section>
@@ -533,6 +593,17 @@ export default function AdminWeddingDetail() {
         index={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
         onNavigate={setLightboxIndex}
+      />
+
+      <ConfirmDialog
+        open={Boolean(confirm)}
+        title={confirm?.title || ''}
+        message={confirm?.message}
+        confirmLabel={confirm?.confirmLabel}
+        danger={confirm?.danger}
+        busy={confirmBusy}
+        onConfirm={runConfirm}
+        onCancel={() => setConfirm(null)}
       />
     </div>
   );

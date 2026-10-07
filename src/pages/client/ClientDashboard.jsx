@@ -29,10 +29,10 @@ export default function ClientDashboard() {
           Consulta el avance de la planeación, tus documentos y las fotos.
         </p>
 
-        {error && <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
+        {error && <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{error}</p>}
 
         {loading ? (
-          <p className="mt-6 text-sm text-slate-600">Cargando...</p>
+          <p className="mt-6 text-sm text-slate-600" role="status">Cargando...</p>
         ) : weddings.length === 0 ? (
           <div className="card mt-6 text-sm text-slate-600">
             Aún no tienes una boda asociada. Contacta a tu Wedding Planner.

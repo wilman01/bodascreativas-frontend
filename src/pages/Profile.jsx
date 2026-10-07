@@ -44,7 +44,7 @@ export default function Profile() {
     event.preventDefault();
     setError('');
     if (newPassword !== confirmPassword) {
-      setError('Las contrasenas no coinciden.');
+      setError('Las contraseñas no coinciden.');
       return;
     }
     setSavingPwd(true);
@@ -53,7 +53,7 @@ export default function Profile() {
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
-      flash('Contrasena actualizada.');
+      flash('Contraseña actualizada.');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -66,7 +66,7 @@ export default function Profile() {
       <main className="mx-auto max-w-3xl px-4 py-8">
         <h1 className="font-display text-3xl font-semibold text-ink-900">Mi perfil</h1>
         <p className="text-sm text-slate-600">
-          Actualiza tus datos personales y tu contrasena.
+          Actualiza tus datos personales y tu contraseña.
         </p>
 
         {error && (
@@ -75,11 +75,13 @@ export default function Profile() {
           </p>
         )}
         {notice && (
-          <p className="mt-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{notice}</p>
+          <p className="mt-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700" role="status">
+            {notice}
+          </p>
         )}
 
         <section className="card mt-6 flex items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-gold-500 text-2xl font-semibold text-white">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-brand-700 to-brand-600 text-2xl font-semibold text-white">
             {(user?.name || '?').charAt(0).toUpperCase()}
           </div>
           <div>
@@ -105,7 +107,7 @@ export default function Profile() {
             />
           </div>
           <div>
-            <label className="label" htmlFor="profile-phone">Telefono (opcional)</label>
+            <label className="label" htmlFor="profile-phone">Teléfono (opcional)</label>
             <input
               id="profile-phone"
               className="input"
@@ -120,10 +122,10 @@ export default function Profile() {
         </form>
 
         <form onSubmit={handlePassword} className="card mt-6 space-y-4">
-          <h2 className="font-display text-xl font-semibold text-ink-900">Cambiar contrasena</h2>
+          <h2 className="font-display text-xl font-semibold text-ink-900">Cambiar contraseña</h2>
 
           <div>
-            <label className="label" htmlFor="pwd-current">Contrasena actual</label>
+            <label className="label" htmlFor="pwd-current">Contraseña actual</label>
             <input
               id="pwd-current"
               type="password"
@@ -135,7 +137,7 @@ export default function Profile() {
             />
           </div>
           <div>
-            <label className="label" htmlFor="pwd-new">Nueva contrasena</label>
+            <label className="label" htmlFor="pwd-new">Nueva contraseña</label>
             <input
               id="pwd-new"
               type="password"
@@ -148,7 +150,7 @@ export default function Profile() {
             />
           </div>
           <div>
-            <label className="label" htmlFor="pwd-confirm">Confirmar nueva contrasena</label>
+            <label className="label" htmlFor="pwd-confirm">Confirmar nueva contraseña</label>
             <input
               id="pwd-confirm"
               type="password"
@@ -162,7 +164,7 @@ export default function Profile() {
           </div>
 
           <button type="submit" className="btn-primary" disabled={savingPwd}>
-            {savingPwd ? 'Actualizando...' : 'Actualizar contrasena'}
+            {savingPwd ? 'Actualizando...' : 'Actualizar contraseña'}
           </button>
         </form>
       </main>

@@ -1,7 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { resolveFileUrl } from '../api/client';
+import { useFocusTrap } from '../hooks/useFocusTrap.js';
 
 export default function Lightbox({ photos, index, onClose, onNavigate }) {
+  const dialogRef = useRef(null);
+  useFocusTrap(index != null, dialogRef);
+
   useEffect(() => {
     const handler = (event) => {
       if (event.key === 'Escape') onClose();
@@ -17,10 +21,13 @@ export default function Lightbox({ photos, index, onClose, onNavigate }) {
 
   return (
     <div
+      ref={dialogRef}
+      tabIndex={-1}
       className="fixed inset-0 z-50 flex items-center justify-center bg-ink-900/90 p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
+      aria-label="Visor de fotos"
     >
       <button
         type="button"

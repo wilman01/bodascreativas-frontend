@@ -114,7 +114,7 @@ export default function AdminDashboard() {
         </section>
 
         {error && (
-          <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>
+          <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{error}</p>
         )}
 
         {showForm && (
@@ -152,7 +152,10 @@ export default function AdminDashboard() {
             </div>
             <div>
               <label className="label" htmlFor="clientEmail">Email de contacto (pareja)</label>
-              <input id="clientEmail" name="clientEmail" type="email" className="input" value={form.clientEmail} onChange={handleChange} placeholder="pareja@correo.com" />
+              <input id="clientEmail" name="clientEmail" type="email" className="input" value={form.clientEmail} onChange={handleChange} placeholder="pareja@correo.com" aria-describedby="clientEmail-help" />
+              <p id="clientEmail-help" className="mt-1 text-xs text-slate-600">
+                Si indicas un email, se creará una cuenta para la pareja con la contraseña temporal «cambiar123».
+              </p>
             </div>
             <div>
               <label className="label" htmlFor="clientName">Nombre de la pareja (cuenta)</label>
@@ -175,7 +178,7 @@ export default function AdminDashboard() {
           <h2 className="font-display text-2xl font-semibold text-ink-900">Mis bodas</h2>
 
           {loading ? (
-            <p className="mt-4 text-sm text-slate-600">Cargando bodas...</p>
+            <p className="mt-4 text-sm text-slate-600" role="status">Cargando bodas...</p>
           ) : weddings.length === 0 ? (
             <div className="card mt-4 text-sm text-slate-600">
               Aún no tienes bodas registradas. Crea la primera para comenzar.

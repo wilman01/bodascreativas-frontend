@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../../api/client';
+import ConfirmDialog from '../../components/ConfirmDialog.jsx';
 
 const emptyForm = { name: '', email: '', phone: '', role: 'client', password: '' };
 
@@ -31,6 +32,9 @@ export default function AdminUsers() {
     password: '',
   });
   const [savingEdit, setSavingEdit] = useState(false);
+  const [busyId, setBusyId] = useState(null);
+  const [confirmUser, setConfirmUser] = useState(null);
+  const [confirmBusy, setConfirmBusy] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -111,12 +115,25 @@ export default function AdminUsers() {
   };
 
   const toggleStatus = async (user) => {
+    setBusyId(user.id);
+    setError('');
     try {
       await api.patch(`/users/${user.id}/status`, { isActive: !user.isActive });
       await load();
+      flash(user.isActive ? 'Usuario desactivado.' : 'Usuario activado.');
     } catch (err) {
       setError(err.message);
+    } finally {
+      setBusyId(null);
+      setConfirmUser(null);
+      setConfirmBusy(false);
     }
+  };
+
+  const handleConfirm = async () => {
+    if (!confirmUser) return;
+    setConfirmBusy(true);
+    await toggleStatus(confirmUser);
   };
 
   const filtered = filter === 'all' ? users : users.filter((u) => u.role === filter);
@@ -128,7 +145,7 @@ export default function AdminUsers() {
           <div>
             <h1 className="font-display text-3xl font-semibold text-ink-900">Usuarios</h1>
             <p className="text-sm text-slate-600">
-              Gestiona perfiles, roles y contrasenas de planners y parejas.
+              Gestiona perfiles, roles y contraseñas de planners y parejas.
             </p>
           </div>
           <button type="button" className="btn-primary" onClick={() => setShowCreate((v) => !v)}>
@@ -136,9 +153,9 @@ export default function AdminUsers() {
           </button>
         </div>
 
-        {error && <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
+        {error && <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{error}</p>}
         {notice && (
-          <p className="mt-6 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{notice}</p>
+          <p className="mt-6 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700" role="status">{notice}</p>
         )}
 
         {showCreate && (
@@ -154,7 +171,7 @@ export default function AdminUsers() {
               <input id="user-email" name="email" type="email" className="input" value={form.email} onChange={handleChange} required />
             </div>
             <div>
-              <label className="label" htmlFor="user-phone">Telefono</label>
+              <label className="label" htmlFor="user-phone">Teléfono</label>
               <input id="user-phone" name="phone" className="input" value={form.phone} onChange={handleChange} />
             </div>
             <div>
@@ -165,7 +182,7 @@ export default function AdminUsers() {
               </select>
             </div>
             <div className="md:col-span-2">
-              <label className="label" htmlFor="user-password">Contrasena inicial *</label>
+              <label className="label" htmlFor="user-password">Contraseña inicial *</label>
               <input
                 id="user-password"
                 name="password"
@@ -201,7 +218,7 @@ export default function AdminUsers() {
               <input id="edit-email" name="email" type="email" className="input" value={editForm.email} onChange={handleEditChange} required />
             </div>
             <div>
-              <label className="label" htmlFor="edit-phone">Telefono</label>
+              <label className="label" htmlFor="edit-phone">Teléfono</label>
               <input id="edit-phone" name="phone" className="input" value={editForm.phone} onChange={handleEditChange} />
             </div>
             <div>
@@ -212,7 +229,7 @@ export default function AdminUsers() {
               </select>
             </div>
             <div>
-              <label className="label" htmlFor="edit-password">Nueva contrasena (opcional)</label>
+              <label className="label" htmlFor="edit-password">Nueva contraseña (opcional)</label>
               <input
                 id="edit-password"
                 name="password"
@@ -248,13 +265,14 @@ export default function AdminUsers() {
         )}
 
         <section className="mt-8">
-          <div className="mb-4 flex gap-2">
+          <div className="mb-4 flex gap-2" role="group" aria-label="Filtrar usuarios por rol">
             {FILTERS.map((item) => (
               <button
                 key={item.id}
                 type="button"
+                aria-pressed={filter === item.id}
                 onClick={() => setFilter(item.id)}
-                className={`rounded-full px-4 py-1.5 text-sm font-semibold transition ${
+                className={`min-h-[44px] rounded-full px-4 py-1.5 text-sm font-semibold transition ${
                   filter === item.id
                     ? 'bg-brand-600 text-white'
                     : 'bg-white text-ink-800 hover:bg-brand-100'
@@ -266,7 +284,7 @@ export default function AdminUsers() {
           </div>
 
           {loading ? (
-            <p className="text-sm text-slate-600">Cargando usuarios...</p>
+            <p className="text-sm text-slate-600" role="status">Cargando usuarios...</p>
           ) : filtered.length === 0 ? (
             <div className="card text-sm text-slate-600">No hay usuarios con ese filtro.</div>
           ) : (
@@ -294,14 +312,15 @@ export default function AdminUsers() {
                     </button>
                     <button
                       type="button"
-                      className={`rounded-lg px-3 py-2 text-xs font-semibold transition ${
+                      className={`min-h-[44px] rounded-lg px-3 py-2 text-xs font-semibold transition disabled:opacity-60 ${
                         user.isActive
                           ? 'text-red-600 hover:bg-red-50'
                           : 'text-emerald-700 hover:bg-emerald-50'
                       }`}
-                      onClick={() => toggleStatus(user)}
+                      onClick={() => (user.isActive ? setConfirmUser(user) : toggleStatus(user))}
+                      disabled={busyId === user.id}
                     >
-                      {user.isActive ? 'Desactivar' : 'Activar'}
+                      {busyId === user.id ? 'Procesando...' : user.isActive ? 'Desactivar' : 'Activar'}
                     </button>
                   </div>
                 </article>
@@ -310,6 +329,17 @@ export default function AdminUsers() {
           )}
         </section>
       </main>
+
+      <ConfirmDialog
+        open={Boolean(confirmUser)}
+        title="Desactivar usuario"
+        message={confirmUser ? `¿Seguro que deseas desactivar a ${confirmUser.name}? No podrá iniciar sesión hasta reactivarlo.` : ''}
+        confirmLabel="Desactivar"
+        danger
+        busy={confirmBusy}
+        onConfirm={handleConfirm}
+        onCancel={() => setConfirmUser(null)}
+      />
     </div>
   );
 }
