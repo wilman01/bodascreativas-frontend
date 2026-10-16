@@ -103,7 +103,7 @@ export default function AdminDashboard() {
           </article>
           <article className="card">
             <p className="text-xs uppercase tracking-[0.2em] text-stone-600">Progreso promedio</p>
-            <p className="mt-1 font-display text-4xl font-extralight tracking-tight text-brand-600">{avgProgress}%</p>
+            <p className="mt-1 font-display text-4xl font-extralight tracking-tight text-accent">{avgProgress}%</p>
           </article>
           <article className="card">
             <p className="text-xs uppercase tracking-[0.2em] text-stone-600">Confirmadas</p>

@@ -12,6 +12,18 @@
       rel="stylesheet"
     />
     <meta name="theme-color" content="#aa2d2a" />
+    <script>
+      // Aplica el tema antes del primer pintado para evitar un destello claro.
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem('bc_theme'); } catch (e) {}
+        var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) {
+          document.documentElement.classList.add('dark');
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#161110');
+        }
+      })();
+    </script>
     <title>Bodas Creativas | Planificación de bodas</title>
   </head>
   <body class="bg-brand-50">

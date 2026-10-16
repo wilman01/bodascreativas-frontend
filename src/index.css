@@ -3,6 +3,70 @@
 @tailwind utilities;
 
 @layer base {
+  /* Tokens de color (RGB) consumidos por tailwind.config.js. */
+  :root {
+    color-scheme: light;
+    --c-brand-50: 252 247 246;
+    --c-brand-100: 248 232 230;
+    --c-brand-200: 240 207 203;
+    --c-brand-300: 227 166 160;
+    --c-brand-400: 208 110 103;
+    --c-brand-500: 189 70 65;
+    --c-brand-600: 170 45 42;
+    --c-brand-700: 142 37 35;
+    --c-brand-800: 115 32 30;
+    --c-brand-900: 90 27 25;
+    --c-gold-100: 248 241 228;
+    --c-gold-200: 239 223 191;
+    --c-gold-300: 227 199 146;
+    --c-gold-400: 212 171 100;
+    --c-gold-500: 196 147 74;
+    --c-gold-600: 166 122 53;
+    --c-gold-700: 134 97 42;
+    --c-gold-800: 106 76 33;
+    --c-ink-700: 122 65 54;
+    --c-ink-800: 104 48 37;
+    --c-ink-900: 77 34 25;
+    --c-surface: 255 255 255;
+    --c-accent: 170 45 42;
+    --c-stone-500: 120 113 108;
+    --c-stone-600: 87 83 78;
+    --c-red-50: 254 242 242;
+    --c-red-100: 254 226 226;
+    --c-red-700: 185 28 28;
+    --c-emerald-50: 236 253 245;
+    --c-emerald-100: 209 250 229;
+    --c-emerald-600: 5 150 105;
+    --c-emerald-700: 4 120 87;
+    --c-amber-100: 254 243 199;
+    --c-amber-700: 180 83 9;
+  }
+  .dark {
+    color-scheme: dark;
+    --c-brand-50: 22 17 16;
+    --c-brand-100: 43 32 30;
+    --c-brand-200: 67 50 47;
+    --c-brand-300: 106 71 65;
+    --c-brand-400: 196 96 90;
+    --c-gold-100: 58 46 28;
+    --c-gold-800: 232 207 158;
+    --c-ink-700: 203 181 175;
+    --c-ink-800: 230 214 209;
+    --c-ink-900: 246 236 233;
+    --c-surface: 33 25 24;
+    --c-accent: 236 143 135;
+    --c-stone-500: 163 149 144;
+    --c-stone-600: 191 176 171;
+    --c-red-50: 59 23 22;
+    --c-red-100: 74 29 27;
+    --c-red-700: 245 161 155;
+    --c-emerald-50: 17 39 30;
+    --c-emerald-100: 23 53 39;
+    --c-emerald-600: 52 211 153;
+    --c-emerald-700: 110 231 183;
+    --c-amber-100: 59 44 16;
+    --c-amber-700: 251 191 36;
+  }
   html,
   body,
   #root {
@@ -23,7 +87,7 @@
   button:focus-visible,
   a:focus-visible,
   [role='button']:focus-visible {
-    outline: 2px solid #aa2d2a;
+    outline: 2px solid rgb(var(--c-accent));
     outline-offset: 2px;
   }
   @media (prefers-reduced-motion: reduce) {
@@ -46,7 +110,7 @@
     @apply btn bg-brand-600 text-white shadow-sm shadow-brand-900/20 hover:bg-brand-700;
   }
   .btn-ghost {
-    @apply btn border border-brand-200 bg-white text-ink-800 hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700;
+    @apply btn border border-brand-200 bg-surface text-ink-800 hover:border-brand-300 hover:bg-brand-50 hover:text-accent;
   }
   .btn-danger {
     @apply btn bg-red-600 text-white hover:bg-red-700;
@@ -55,17 +119,17 @@
     @apply btn bg-gold-700 text-white hover:bg-gold-800;
   }
   .input {
-    @apply w-full rounded-xl border border-brand-200 bg-white px-4 py-2.5 text-sm outline-none transition placeholder:text-stone-500 focus:border-brand-400 focus:ring-2 focus:ring-brand-100;
+    @apply w-full rounded-xl border border-brand-200 bg-surface px-4 py-2.5 text-sm outline-none transition placeholder:text-stone-500 focus:border-brand-400 focus:ring-2 focus:ring-brand-100;
   }
   .label {
     @apply mb-1 block text-sm font-medium text-ink-700;
   }
   .card {
-    @apply rounded-2xl border border-brand-100 bg-white p-5 shadow-soft;
+    @apply rounded-2xl border border-brand-100 bg-surface p-5 shadow-soft;
   }
   /* Rótulo en versalitas espaciadas, como "WEDDING & EVENT PLANNER" del logo */
   .eyebrow {
-    @apply text-[0.68rem] font-medium uppercase tracking-[0.28em] text-brand-600;
+    @apply text-[0.68rem] font-medium uppercase tracking-[0.28em] text-accent;
   }
   .badge {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;

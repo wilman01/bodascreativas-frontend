@@ -23,7 +23,7 @@ export default function Lightbox({ photos, index, onClose, onNavigate }) {
     <div
       ref={dialogRef}
       tabIndex={-1}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-ink-900/90 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-night/90 p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"

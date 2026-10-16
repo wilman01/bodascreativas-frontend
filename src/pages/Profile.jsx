@@ -87,7 +87,7 @@ export default function Profile() {
           <div>
             <p className="font-display text-2xl font-normal text-ink-900">{user?.name}</p>
             <p className="text-sm text-stone-600">{user?.email}</p>
-            <span className="badge mt-1 bg-brand-100 text-brand-700">
+            <span className="badge mt-1 bg-brand-100 text-accent">
               {ROLE_LABEL[user?.role] || user?.role}
             </span>
           </div>

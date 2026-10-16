@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useFocusTrap } from '../hooks/useFocusTrap.js';
 import Wordmark from './Wordmark.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 const ROLE_LABEL = { admin: 'Wedding Planner', client: 'Pareja' };
 
@@ -58,8 +59,9 @@ function SidebarContent({ onNavigate }) {
 
   return (
     <>
-      <div className="flex h-20 items-center gap-3 border-b border-brand-100 px-5">
-        <img src="/isotipo.png" alt="" className="h-10 w-auto shrink-0" />
+      <div className="flex h-20 items-center gap-2.5 border-b border-brand-100 px-4">
+        <img src="/isotipo.png" alt="" className="h-9 w-auto shrink-0 dark:hidden" />
+        <img src="/isotipo-white.png" alt="" className="hidden h-9 w-auto shrink-0 dark:block" />
         <Wordmark size="sm" />
       </div>
 
@@ -74,7 +76,7 @@ function SidebarContent({ onNavigate }) {
               `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition ${
                 isActive
                   ? 'bg-gradient-to-r from-brand-700 to-brand-600 text-white shadow-soft'
-                  : 'text-ink-700 hover:bg-brand-50 hover:text-brand-700'
+                  : 'text-ink-700 hover:bg-brand-50 hover:text-accent'
               }`
             }
           >
@@ -89,10 +91,11 @@ function SidebarContent({ onNavigate }) {
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-700 to-brand-600 text-lg font-semibold text-white">
             {(user?.name || '?').charAt(0).toUpperCase()}
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-semibold text-ink-900">{user?.name}</p>
             <p className="text-xs text-stone-600">{ROLE_LABEL[user?.role] || user?.role}</p>
           </div>
+          <ThemeToggle className="shrink-0" />
         </div>
         <button type="button" onClick={handleLogout} className="btn-ghost mt-2 w-full">
           Salir
@@ -119,16 +122,16 @@ export default function DashboardLayout() {
     <div className="min-h-screen bg-brand-50">
       <a
         href="#main-content"
-        className="sr-only z-50 focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-brand-700 focus:shadow-soft"
+        className="sr-only z-50 focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded-lg focus:bg-surface focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-accent focus:shadow-soft"
       >
         Saltar al contenido
       </a>
 
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-brand-100 bg-white lg:flex">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-brand-100 bg-surface lg:flex">
         <SidebarContent />
       </aside>
 
-      <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-brand-100 bg-white/90 px-4 backdrop-blur lg:hidden">
+      <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-brand-100 bg-surface/90 px-4 backdrop-blur lg:hidden">
         <button
           type="button"
           aria-label="Abrir menú"
@@ -140,19 +143,20 @@ export default function DashboardLayout() {
           </svg>
         </button>
         <span className="flex items-center gap-2">
-          <img src="/isotipo.png" alt="" className="h-7 w-auto" />
+          <img src="/isotipo.png" alt="" className="h-7 w-auto dark:hidden" />
+          <img src="/isotipo-white.png" alt="" className="hidden h-7 w-auto dark:block" />
           <Wordmark size="sm" tagline={false} />
         </span>
-        <span className="w-9" />
+        <ThemeToggle />
       </header>
 
       {open && (
         <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label="Menú">
-          <div className="absolute inset-0 bg-ink-900/60" onClick={() => setOpen(false)} aria-hidden="true" />
+          <div className="absolute inset-0 bg-night/60" onClick={() => setOpen(false)} aria-hidden="true" />
           <aside
             ref={drawerRef}
             tabIndex={-1}
-            className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-white shadow-soft"
+            className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-surface shadow-soft"
           >
             <button
               type="button"

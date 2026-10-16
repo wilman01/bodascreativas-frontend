@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
-import Wordmark from '../components/Wordmark.jsx';
+import ThemeToggle from '../components/ThemeToggle.jsx';
 
 export default function Login() {
   const { login, user } = useAuth();
@@ -35,13 +35,16 @@ export default function Login() {
 
   return (
     <main className="grid min-h-screen lg:grid-cols-2">
-      <section className="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-br from-brand-600 via-brand-700 to-ink-800 p-12 text-white lg:flex">
+      <section className="relative hidden flex-col justify-between overflow-hidden bg-brand-800 p-12 text-white lg:flex">
         <img
-          src="/isotipo-white.png"
+          src="/img/ramos-vertical.webp"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 top-1/2 w-[34rem] max-w-none -translate-y-1/2 opacity-[0.07]"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
         />
+        {/* Velo con los colores oficiales (7627 C → 483 C) para mantener el texto legible */}
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-600/85 via-brand-700/70 to-[#683025]/95" aria-hidden="true" />
         <img src="/logo-white.png" alt="Bodas Creativas — Wedding & Event Planner" className="relative w-64" />
         <div className="relative">
           <p className="text-xs font-normal uppercase tracking-[0.32em] text-gold-200">¡Felicitaciones, pareja!</p>
@@ -55,9 +58,13 @@ export default function Login() {
         <p className="relative text-sm text-white/80">© {new Date().getFullYear()} Bodas Creativas</p>
       </section>
 
-      <section className="flex items-center justify-center p-6 sm:p-12">
+      <section className="relative flex items-center justify-center p-6 sm:p-12">
+        <ThemeToggle className="absolute right-4 top-4" />
         <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-5">
-          <img src="/logo.png" alt="Bodas Creativas — Wedding & Event Planner" className="mx-auto w-52 lg:hidden" />
+          <div className="lg:hidden">
+            <img src="/logo.png" alt="Bodas Creativas — Wedding & Event Planner" className="mx-auto w-52 dark:hidden" />
+            <img src="/logo-dark.png" alt="Bodas Creativas — Wedding & Event Planner" className="mx-auto hidden w-52 dark:block" />
+          </div>
 
           <div>
             <p className="eyebrow">Bienvenidos</p>
@@ -104,7 +111,7 @@ export default function Login() {
                 type="button"
                 aria-pressed={showPassword}
                 aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-                className="absolute inset-y-0 right-2 my-auto h-9 rounded-lg px-3 text-xs font-semibold text-brand-600 hover:bg-brand-50"
+                className="absolute inset-y-0 right-2 my-auto h-9 rounded-lg px-3 text-xs font-semibold text-accent hover:bg-brand-50"
                 onClick={() => setShowPassword((v) => !v)}
               >
                 {showPassword ? 'Ocultar' : 'Ver'}

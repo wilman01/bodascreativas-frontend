@@ -22,7 +22,7 @@ export function StatusBadge({ status }) {
     completed: { label: 'Finalizada', className: 'bg-gold-100 text-gold-800' },
     cancelled: { label: 'Cancelada', className: 'bg-red-100 text-red-700' },
   };
-  const item = map[status] || { label: status, className: 'bg-brand-100 text-brand-700' };
+  const item = map[status] || { label: status, className: 'bg-brand-100 text-accent' };
   return <span className={`badge ${item.className}`}>{item.label}</span>;
 }
 

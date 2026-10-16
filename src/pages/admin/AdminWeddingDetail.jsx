@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import api, { formatBytes, formatDate, resolveFileUrl } from '../../api/client';
 import { ProgressBar, StatusBadge } from '../../components/ProgressBar.jsx';
 import Lightbox from '../../components/Lightbox.jsx';
+import CoverPhoto from '../../components/CoverPhoto.jsx';
 import Tabs from '../../components/Tabs.jsx';
 import ConfirmDialog from '../../components/ConfirmDialog.jsx';
 
@@ -268,7 +269,7 @@ export default function AdminWeddingDetail() {
   if (!wedding) {
     return (
       <div className="min-h-screen bg-brand-50">
-        <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-red-600" role="alert">{error || 'Boda no encontrada.'}</p>
+        <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-red-700" role="alert">{error || 'Boda no encontrada.'}</p>
       </div>
     );
   }
@@ -276,11 +277,12 @@ export default function AdminWeddingDetail() {
   return (
     <div className="min-h-screen bg-brand-50">
       <main className="mx-auto max-w-6xl px-4 py-8">
-        <Link to="/admin" className="text-sm font-medium text-brand-600 hover:underline">
+        <Link to="/admin" className="text-sm font-medium text-accent hover:underline">
           ← Volver al panel
         </Link>
 
         <header className="card mt-3">
+              <CoverPhoto />
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h1 className="font-display text-3xl font-light tracking-tight text-ink-900">{wedding.coupleNames}</h1>
@@ -332,7 +334,7 @@ export default function AdminWeddingDetail() {
                   </div>
                   <button
                     type="button"
-                    className="min-h-[44px] rounded-lg px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 hover:underline"
+                    className="min-h-[44px] rounded-lg px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-50 hover:underline"
                     onClick={() => deleteTask(task)}
                   >
                     Eliminar
@@ -413,7 +415,7 @@ export default function AdminWeddingDetail() {
                     </button>
                     <button
                       type="button"
-                      className="min-h-[44px] rounded-lg px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 hover:underline"
+                      className="min-h-[44px] rounded-lg px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-50 hover:underline"
                       onClick={() => deleteDocument(doc)}
                     >
                       Eliminar
@@ -508,7 +510,7 @@ export default function AdminWeddingDetail() {
                           <button
                             type="button"
                             aria-label={`Eliminar «${photo.caption || photo.fileName}»`}
-                            className="absolute right-1 top-1 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-base font-semibold text-red-600 shadow-sm transition hover:bg-white hover:text-red-700"
+                            className="absolute right-1 top-1 flex h-9 w-9 items-center justify-center rounded-full bg-surface/90 text-base font-semibold text-red-700 shadow-sm transition hover:bg-surface hover:text-red-700"
                             onClick={() => deletePhoto(photo)}
                           >
                             ×

@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import api, { formatBytes, formatDate, resolveFileUrl } from '../../api/client';
 import { ProgressBar, StatusBadge } from '../../components/ProgressBar.jsx';
 import Lightbox from '../../components/Lightbox.jsx';
+import CoverPhoto from '../../components/CoverPhoto.jsx';
 import Tabs from '../../components/Tabs.jsx';
 
 const TABS = [
@@ -79,7 +80,7 @@ export default function ClientWeddingDetail() {
   return (
     <div className="min-h-screen bg-brand-50">
       <main className="mx-auto max-w-6xl px-4 py-8">
-        <Link to="/mi-boda" className="text-sm font-medium text-brand-600 hover:underline">
+        <Link to="/mi-boda" className="text-sm font-medium text-accent hover:underline">
           ← Volver
         </Link>
 
@@ -90,6 +91,7 @@ export default function ClientWeddingDetail() {
         ) : wedding ? (
           <>
             <header className="card mt-3">
+              <CoverPhoto />
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <h1 className="font-display text-3xl font-light tracking-tight text-ink-900">

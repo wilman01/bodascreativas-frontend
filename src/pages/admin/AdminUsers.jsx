@@ -275,7 +275,7 @@ export default function AdminUsers() {
                 className={`min-h-[44px] rounded-full px-4 py-1.5 text-sm font-semibold transition ${
                   filter === item.id
                     ? 'bg-brand-600 text-white'
-                    : 'bg-white text-ink-800 hover:bg-brand-100'
+                    : 'bg-surface text-ink-800 hover:bg-brand-100'
                 }`}
               >
                 {item.label}
@@ -295,7 +295,7 @@ export default function AdminUsers() {
                     <p className="font-medium text-ink-900">{user.name}</p>
                     <p className="text-xs text-stone-600">{user.email}</p>
                     <div className="mt-1 flex flex-wrap items-center gap-2">
-                      <span className="badge bg-brand-100 text-brand-700">{ROLE_LABEL[user.role]}</span>
+                      <span className="badge bg-brand-100 text-accent">{ROLE_LABEL[user.role]}</span>
                       {user.phone && <span className="text-xs text-stone-600">{user.phone}</span>}
                       <span
                         className={`badge ${
@@ -314,7 +314,7 @@ export default function AdminUsers() {
                       type="button"
                       className={`min-h-[44px] rounded-lg px-3 py-2 text-xs font-semibold transition disabled:opacity-60 ${
                         user.isActive
-                          ? 'text-red-600 hover:bg-red-50'
+                          ? 'text-red-700 hover:bg-red-50'
                           : 'text-emerald-700 hover:bg-emerald-50'
                       }`}
                       onClick={() => (user.isActive ? setConfirmUser(user) : toggleStatus(user))}

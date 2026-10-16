@@ -24,10 +24,23 @@ export default function ClientDashboard() {
   return (
     <div className="min-h-screen bg-brand-50">
       <main className="mx-auto max-w-6xl px-4 py-8">
-        <h1 className="font-display text-3xl font-light tracking-tight text-ink-900">Mi boda</h1>
-        <p className="text-sm text-stone-600">
-          Consulta el avance de la planeación, tus documentos y las fotos.
-        </p>
+        <section className="relative overflow-hidden rounded-3xl border border-brand-100 bg-surface px-6 py-10 shadow-soft sm:px-10">
+          <img
+            src="/img/confeti.webp"
+            alt=""
+            aria-hidden="true"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover dark:opacity-40"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-surface/95 via-surface/70 to-surface/10" aria-hidden="true" />
+          <div className="relative">
+            <p className="eyebrow">Wedding &amp; Event Planner</p>
+            <h1 className="mt-2 font-display text-4xl font-extralight tracking-tight text-ink-900 sm:text-5xl">Mi boda</h1>
+            <p className="mt-2 max-w-md text-sm text-ink-700">
+              Consulta el avance de la planeación, tus documentos y las fotos.
+            </p>
+          </div>
+        </section>
 
         {error && <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">{error}</p>}
 

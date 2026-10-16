@@ -20,7 +20,7 @@ export default function ConfirmDialog({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-ink-900/60"
+        className="absolute inset-0 bg-night/60"
         onClick={busy ? undefined : onCancel}
         aria-hidden="true"
       />
@@ -31,7 +31,7 @@ export default function ConfirmDialog({
         aria-modal="true"
         aria-labelledby="confirm-title"
         aria-describedby={message ? 'confirm-desc' : undefined}
-        className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-soft"
+        className="relative w-full max-w-sm rounded-2xl bg-surface p-6 shadow-soft"
       >
         <h2 id="confirm-title" className="font-display text-xl font-normal text-ink-900">
           {title}
