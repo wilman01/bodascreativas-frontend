@@ -45,7 +45,7 @@ export default function Tabs({ tabs, active, onChange, label = 'Secciones', clas
             className={`-mb-px min-h-[44px] border-b-2 px-4 py-2.5 text-sm font-semibold transition ${
               selected
                 ? 'border-brand-600 text-brand-700'
-                : 'border-transparent text-slate-600 hover:text-ink-800'
+                : 'border-transparent text-stone-600 hover:text-ink-800'
             }`}
           >
             {item.label}

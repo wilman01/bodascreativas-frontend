@@ -4,12 +4,12 @@ export function ProgressBar({ value = 0, showLabel = true }) {
     <div>
       <div className="h-2.5 w-full overflow-hidden rounded-full bg-brand-100">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-brand-400 via-brand-500 to-gold-500 transition-all"
+          className="h-full rounded-full bg-gradient-to-r from-brand-700 via-brand-500 to-gold-400 transition-all"
           style={{ width: `${safe}%` }}
         />
       </div>
       {showLabel && (
-        <p className="mt-1 text-right text-xs font-medium text-slate-600">{safe}% completado</p>
+        <p className="mt-1 text-right text-xs font-medium text-stone-600">{safe}% completado</p>
       )}
     </div>
   );
@@ -19,7 +19,7 @@ export function StatusBadge({ status }) {
   const map = {
     planning: { label: 'En planeación', className: 'bg-amber-100 text-amber-700' },
     confirmed: { label: 'Confirmada', className: 'bg-emerald-100 text-emerald-700' },
-    completed: { label: 'Finalizada', className: 'bg-sky-100 text-sky-700' },
+    completed: { label: 'Finalizada', className: 'bg-gold-100 text-gold-800' },
     cancelled: { label: 'Cancelada', className: 'bg-red-100 text-red-700' },
   };
   const item = map[status] || { label: status, className: 'bg-brand-100 text-brand-700' };

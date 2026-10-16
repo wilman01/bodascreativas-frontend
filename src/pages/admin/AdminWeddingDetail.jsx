@@ -260,7 +260,7 @@ export default function AdminWeddingDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-brand-50">
-        <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-600" role="status">Cargando boda...</p>
+        <p className="mx-auto max-w-6xl px-4 py-10 text-sm text-stone-600" role="status">Cargando boda...</p>
       </div>
     );
   }
@@ -284,7 +284,7 @@ export default function AdminWeddingDetail() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h1 className="font-display text-3xl font-semibold text-ink-900">{wedding.coupleNames}</h1>
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-stone-600">
                 {formatDate(wedding.weddingDate)} · {wedding.venue || 'Lugar por definir'}
                 {wedding.city ? ` · ${wedding.city}` : ''}
               </p>
@@ -306,7 +306,7 @@ export default function AdminWeddingDetail() {
           <section role="tabpanel" id="panel-tasks" aria-labelledby="tab-tasks" className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
             <div className="space-y-3">
               {tasks.length === 0 && (
-                <p className="card text-sm text-slate-600">Sin tareas. Crea la primera.</p>
+                <p className="card text-sm text-stone-600">Sin tareas. Crea la primera.</p>
               )}
               {tasks.map((task) => (
                 <div key={task.id} className="card flex items-start gap-3">
@@ -320,13 +320,13 @@ export default function AdminWeddingDetail() {
                     aria-label={`Marcar «${task.title}» como ${task.isCompleted ? 'pendiente' : 'completada'}`}
                   />
                   <div className="flex-1">
-                    <label htmlFor={`task-${task.id}`} className={`font-medium ${task.isCompleted ? 'text-slate-600 line-through' : 'text-ink-900'}`}>
+                    <label htmlFor={`task-${task.id}`} className={`font-medium ${task.isCompleted ? 'text-stone-600 line-through' : 'text-ink-900'}`}>
                       {task.title}
                     </label>
                     {task.description && (
-                      <p className="text-sm text-slate-600">{task.description}</p>
+                      <p className="text-sm text-stone-600">{task.description}</p>
                     )}
-                    <p className="mt-1 text-xs text-slate-600">
+                    <p className="mt-1 text-xs text-stone-600">
                       {task.category} · {task.dueDate ? formatDate(task.dueDate) : 'Sin fecha límite'}
                     </p>
                   </div>
@@ -397,13 +397,13 @@ export default function AdminWeddingDetail() {
           <section role="tabpanel" id="panel-documents" aria-labelledby="tab-documents" className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
             <div className="space-y-3">
               {documents.length === 0 && (
-                <p className="card text-sm text-slate-600">Aún no hay documentos.</p>
+                <p className="card text-sm text-stone-600">Aún no hay documentos.</p>
               )}
               {documents.map((doc) => (
                 <div key={doc.id} className="card flex items-center justify-between gap-3">
                   <div>
                     <p className="font-medium text-ink-900">{doc.title}</p>
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-stone-600">
                       {doc.category} · {formatBytes(doc.fileSize)} · {formatDate(doc.createdAt)}
                     </p>
                   </div>
@@ -473,18 +473,18 @@ export default function AdminWeddingDetail() {
           <section role="tabpanel" id="panel-gallery" aria-labelledby="tab-gallery" className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
             <div className="space-y-6">
               {albums.length === 0 && (
-                <p className="card text-sm text-slate-600">Crea un álbum para agrupar las fotos.</p>
+                <p className="card text-sm text-stone-600">Crea un álbum para agrupar las fotos.</p>
               )}
               {albums.map((album) => (
                 <div key={album.id} className="card">
                   <div className="mb-3">
                     <h3 className="font-display text-xl font-semibold text-ink-900">{album.name}</h3>
                     {album.description && (
-                      <p className="text-sm text-slate-600">{album.description}</p>
+                      <p className="text-sm text-stone-600">{album.description}</p>
                     )}
                   </div>
                   {(album.photos || []).length === 0 ? (
-                    <p className="text-sm text-slate-600">Álbum vacío.</p>
+                    <p className="text-sm text-stone-600">Álbum vacío.</p>
                   ) : (
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                       {album.photos.map((photo) => (

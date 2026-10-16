@@ -144,7 +144,7 @@ export default function AdminUsers() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="font-display text-3xl font-semibold text-ink-900">Usuarios</h1>
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-stone-600">
               Gestiona perfiles, roles y contraseñas de planners y parejas.
             </p>
           </div>
@@ -284,19 +284,19 @@ export default function AdminUsers() {
           </div>
 
           {loading ? (
-            <p className="text-sm text-slate-600" role="status">Cargando usuarios...</p>
+            <p className="text-sm text-stone-600" role="status">Cargando usuarios...</p>
           ) : filtered.length === 0 ? (
-            <div className="card text-sm text-slate-600">No hay usuarios con ese filtro.</div>
+            <div className="card text-sm text-stone-600">No hay usuarios con ese filtro.</div>
           ) : (
             <div className="space-y-3">
               {filtered.map((user) => (
                 <article key={user.id} className="card flex flex-wrap items-center justify-between gap-3">
                   <div className="min-w-0">
                     <p className="font-medium text-ink-900">{user.name}</p>
-                    <p className="text-xs text-slate-600">{user.email}</p>
+                    <p className="text-xs text-stone-600">{user.email}</p>
                     <div className="mt-1 flex flex-wrap items-center gap-2">
                       <span className="badge bg-brand-100 text-brand-700">{ROLE_LABEL[user.role]}</span>
-                      {user.phone && <span className="text-xs text-slate-600">{user.phone}</span>}
+                      {user.phone && <span className="text-xs text-stone-600">{user.phone}</span>}
                       <span
                         className={`badge ${
                           user.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'

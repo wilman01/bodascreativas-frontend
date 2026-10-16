@@ -65,7 +65,7 @@ export default function Profile() {
     <div className="min-h-screen bg-brand-50">
       <main className="mx-auto max-w-3xl px-4 py-8">
         <h1 className="font-display text-3xl font-semibold text-ink-900">Mi perfil</h1>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-stone-600">
           Actualiza tus datos personales y tu contraseña.
         </p>
 
@@ -86,7 +86,7 @@ export default function Profile() {
           </div>
           <div>
             <p className="font-display text-2xl font-semibold text-ink-900">{user?.name}</p>
-            <p className="text-sm text-slate-600">{user?.email}</p>
+            <p className="text-sm text-stone-600">{user?.email}</p>
             <span className="badge mt-1 bg-brand-100 text-brand-700">
               {ROLE_LABEL[user?.role] || user?.role}
             </span>

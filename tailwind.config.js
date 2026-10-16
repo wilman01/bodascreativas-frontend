@@ -1,35 +1,38 @@
 /** @type {import('tailwindcss').Config} */
+// Paleta inspirada en la identidad de Bodas Creativas:
+// carmesí del corazón principal (#960C1C) y marrón vino del segundo corazón (#5A1A14),
+// sobre fondos marfil cálidos y acentos champagne.
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
         brand: {
-          50: '#fdf2f8',
-          100: '#fce7f3',
-          200: '#fbcfe8',
-          300: '#f9a8d4',
-          400: '#f472b6',
-          500: '#ec4899',
-          600: '#db2777',
-          700: '#be185d',
-          800: '#9d174d',
-          900: '#831843',
+          50: '#fcf7f5',
+          100: '#f7e9e6',
+          200: '#efd2cd',
+          300: '#e2aaa3',
+          400: '#cc6e68',
+          500: '#b3333b',
+          600: '#960c1c',
+          700: '#7d0a18',
+          800: '#650b15',
+          900: '#4c0a11',
         },
         gold: {
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#ca8a04',
-          700: '#a16207',
-          800: '#854d0e',
+          100: '#f8f1e4',
+          200: '#efdfbf',
+          300: '#e3c792',
+          400: '#d4ab64',
+          500: '#c4934a',
+          600: '#a67a35',
+          700: '#86612a',
+          800: '#6a4c21',
         },
         ink: {
-          700: '#3b3540',
-          800: '#2a252f',
-          900: '#1b1720',
+          700: '#5a3a35',
+          800: '#4a231e',
+          900: '#3a1612',
         },
       },
       fontFamily: {
@@ -38,7 +41,7 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        soft: '0 10px 40px -12px rgba(42, 37, 47, 0.25)',
+        soft: '0 10px 40px -12px rgba(74, 35, 30, 0.22)',
       },
     },
   },

@@ -37,7 +37,7 @@ export default function ConfirmDialog({
           {title}
         </h2>
         {message && (
-          <p id="confirm-desc" className="mt-2 text-sm text-slate-600">
+          <p id="confirm-desc" className="mt-2 text-sm text-stone-600">
             {message}
           </p>
         )}

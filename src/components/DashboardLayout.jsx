@@ -58,10 +58,10 @@ function SidebarContent({ onNavigate }) {
   return (
     <>
       <div className="flex h-16 items-center gap-3 border-b border-brand-100 px-5">
-        <img src="/logo.png" alt="Bodas Creativas" className="h-10 w-10 rounded-full object-cover ring-2 ring-gold-300/50" />
+        <img src="/logo.png" alt="" className="h-10 w-10 rounded-full bg-white object-contain p-0.5 ring-1 ring-brand-200" />
         <div className="min-w-0">
-          <p className="truncate font-display text-lg font-semibold leading-tight text-ink-900">Bodas Creativas</p>
-          <p className="text-xs font-medium text-slate-600">Planificación de bodas</p>
+          <p className="truncate font-display text-xl font-semibold leading-tight text-ink-900">Bodas Creativas</p>
+          <p className="eyebrow whitespace-nowrap !text-[0.58rem] !tracking-[0.12em]">Wedding &amp; Event Planner</p>
         </div>
       </div>
 
@@ -76,7 +76,7 @@ function SidebarContent({ onNavigate }) {
               `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition ${
                 isActive
                   ? 'bg-gradient-to-r from-brand-700 to-brand-600 text-white shadow-soft'
-                  : 'text-ink-700 hover:bg-brand-50 hover:text-ink-900'
+                  : 'text-ink-700 hover:bg-brand-50 hover:text-brand-700'
               }`
             }
           >
@@ -93,7 +93,7 @@ function SidebarContent({ onNavigate }) {
           </div>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-ink-900">{user?.name}</p>
-            <p className="text-xs text-slate-600">{ROLE_LABEL[user?.role] || user?.role}</p>
+            <p className="text-xs text-stone-600">{ROLE_LABEL[user?.role] || user?.role}</p>
           </div>
         </div>
         <button type="button" onClick={handleLogout} className="btn-ghost mt-2 w-full">
@@ -141,7 +141,10 @@ export default function DashboardLayout() {
             <path d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <img src="/logo.png" alt="Bodas Creativas" className="h-8 w-8 rounded-full object-cover" />
+        <span className="flex items-center gap-2">
+          <img src="/logo.png" alt="" className="h-8 w-8 object-contain" />
+          <span className="font-display text-lg font-semibold text-ink-900">Bodas Creativas</span>
+        </span>
         <span className="w-9" />
       </header>
 
