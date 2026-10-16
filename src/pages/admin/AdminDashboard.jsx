@@ -86,7 +86,7 @@ export default function AdminDashboard() {
       <main className="mx-auto max-w-6xl px-4 py-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="font-display text-3xl font-semibold text-ink-900">Panel del Planner</h1>
+            <h1 className="font-display text-3xl font-light tracking-tight text-ink-900">Panel del Planner</h1>
             <p className="text-sm text-stone-600">
               Gestiona todas las bodas, tareas, documentos y galerías.
             </p>
@@ -99,15 +99,15 @@ export default function AdminDashboard() {
         <section className="mt-6 grid gap-4 sm:grid-cols-3">
           <article className="card">
             <p className="text-xs uppercase tracking-[0.2em] text-stone-600">Bodas activas</p>
-            <p className="mt-1 font-display text-4xl font-semibold text-ink-900">{totalCouples}</p>
+            <p className="mt-1 font-display text-4xl font-extralight tracking-tight text-ink-900">{totalCouples}</p>
           </article>
           <article className="card">
             <p className="text-xs uppercase tracking-[0.2em] text-stone-600">Progreso promedio</p>
-            <p className="mt-1 font-display text-4xl font-semibold text-brand-600">{avgProgress}%</p>
+            <p className="mt-1 font-display text-4xl font-extralight tracking-tight text-brand-600">{avgProgress}%</p>
           </article>
           <article className="card">
             <p className="text-xs uppercase tracking-[0.2em] text-stone-600">Confirmadas</p>
-            <p className="mt-1 font-display text-4xl font-semibold text-emerald-600">
+            <p className="mt-1 font-display text-4xl font-extralight tracking-tight text-emerald-600">
               {weddings.filter((w) => w.status === 'confirmed').length}
             </p>
           </article>
@@ -119,7 +119,7 @@ export default function AdminDashboard() {
 
         {showForm && (
           <form onSubmit={handleCreate} className="card mt-6 grid gap-4 md:grid-cols-2">
-            <h2 className="font-display text-2xl font-semibold md:col-span-2">Nueva boda</h2>
+            <h2 className="font-display text-2xl font-normal md:col-span-2">Nueva boda</h2>
 
             <div>
               <label className="label" htmlFor="coupleNames">Nombre de la pareja *</label>
@@ -175,7 +175,7 @@ export default function AdminDashboard() {
         )}
 
         <section className="mt-8">
-          <h2 className="font-display text-2xl font-semibold text-ink-900">Mis bodas</h2>
+          <h2 className="font-display text-2xl font-normal text-ink-900">Mis bodas</h2>
 
           {loading ? (
             <p className="mt-4 text-sm text-stone-600" role="status">Cargando bodas...</p>
@@ -189,7 +189,7 @@ export default function AdminDashboard() {
                 <article key={wedding.id} className="card flex flex-col gap-3">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-display text-xl font-semibold text-ink-900">
+                      <h3 className="font-display text-xl font-normal text-ink-900">
                         {wedding.coupleNames}
                       </h3>
                       <p className="text-xs text-stone-600">

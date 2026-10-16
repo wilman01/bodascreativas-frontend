@@ -24,7 +24,7 @@ export default function ClientDashboard() {
   return (
     <div className="min-h-screen bg-brand-50">
       <main className="mx-auto max-w-6xl px-4 py-8">
-        <h1 className="font-display text-3xl font-semibold text-ink-900">Mi boda</h1>
+        <h1 className="font-display text-3xl font-light tracking-tight text-ink-900">Mi boda</h1>
         <p className="text-sm text-stone-600">
           Consulta el avance de la planeación, tus documentos y las fotos.
         </p>
@@ -43,7 +43,7 @@ export default function ClientDashboard() {
               <article key={wedding.id} className="card flex flex-col gap-3">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h2 className="font-display text-2xl font-semibold text-ink-900">
+                    <h2 className="font-display text-2xl font-normal text-ink-900">
                       {wedding.coupleNames}
                     </h2>
                     <p className="text-xs text-stone-600">

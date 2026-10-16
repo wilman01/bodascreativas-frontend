@@ -143,7 +143,7 @@ export default function AdminUsers() {
       <main className="mx-auto max-w-4xl px-4 py-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="font-display text-3xl font-semibold text-ink-900">Usuarios</h1>
+            <h1 className="font-display text-3xl font-light tracking-tight text-ink-900">Usuarios</h1>
             <p className="text-sm text-stone-600">
               Gestiona perfiles, roles y contraseñas de planners y parejas.
             </p>
@@ -160,7 +160,7 @@ export default function AdminUsers() {
 
         {showCreate && (
           <form onSubmit={handleCreate} className="card mt-6 grid gap-4 md:grid-cols-2">
-            <h2 className="font-display text-2xl font-semibold md:col-span-2">Nuevo usuario</h2>
+            <h2 className="font-display text-2xl font-normal md:col-span-2">Nuevo usuario</h2>
 
             <div>
               <label className="label" htmlFor="user-name">Nombre *</label>
@@ -205,7 +205,7 @@ export default function AdminUsers() {
 
         {editing && (
           <form onSubmit={handleEdit} className="card mt-6 grid gap-4 md:grid-cols-2">
-            <h2 className="font-display text-2xl font-semibold md:col-span-2">
+            <h2 className="font-display text-2xl font-normal md:col-span-2">
               Editar usuario: {editing.name}
             </h2>
 

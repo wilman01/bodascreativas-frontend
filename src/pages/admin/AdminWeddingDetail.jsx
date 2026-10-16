@@ -283,7 +283,7 @@ export default function AdminWeddingDetail() {
         <header className="card mt-3">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h1 className="font-display text-3xl font-semibold text-ink-900">{wedding.coupleNames}</h1>
+              <h1 className="font-display text-3xl font-light tracking-tight text-ink-900">{wedding.coupleNames}</h1>
               <p className="text-sm text-stone-600">
                 {formatDate(wedding.weddingDate)} · {wedding.venue || 'Lugar por definir'}
                 {wedding.city ? ` · ${wedding.city}` : ''}
@@ -342,7 +342,7 @@ export default function AdminWeddingDetail() {
             </div>
 
             <form onSubmit={createTask} className="card h-fit space-y-3">
-              <h2 className="font-display text-xl font-semibold">Nueva tarea</h2>
+              <h2 className="font-display text-xl font-normal">Nueva tarea</h2>
               <div>
                 <label className="label" htmlFor="task-title">Título</label>
                 <input
@@ -424,7 +424,7 @@ export default function AdminWeddingDetail() {
             </div>
 
             <form onSubmit={uploadDocument} className="card h-fit space-y-3">
-              <h2 className="font-display text-xl font-semibold">Subir documento</h2>
+              <h2 className="font-display text-xl font-normal">Subir documento</h2>
               <div>
                 <label className="label" htmlFor="doc-title">Título (opcional)</label>
                 <input
@@ -478,7 +478,7 @@ export default function AdminWeddingDetail() {
               {albums.map((album) => (
                 <div key={album.id} className="card">
                   <div className="mb-3">
-                    <h3 className="font-display text-xl font-semibold text-ink-900">{album.name}</h3>
+                    <h3 className="font-display text-xl font-normal text-ink-900">{album.name}</h3>
                     {album.description && (
                       <p className="text-sm text-stone-600">{album.description}</p>
                     )}
@@ -523,7 +523,7 @@ export default function AdminWeddingDetail() {
 
             <div className="space-y-6">
               <form onSubmit={createAlbum} className="card space-y-3">
-                <h2 className="font-display text-xl font-semibold">Nuevo álbum</h2>
+                <h2 className="font-display text-xl font-normal">Nuevo álbum</h2>
                 <div>
                   <label className="label" htmlFor="album-name">Nombre *</label>
                   <input
@@ -552,7 +552,7 @@ export default function AdminWeddingDetail() {
               </form>
 
               <form onSubmit={uploadPhotos} className="card space-y-3">
-                <h2 className="font-display text-xl font-semibold">Subir fotos</h2>
+                <h2 className="font-display text-xl font-normal">Subir fotos</h2>
                 <div>
                   <label className="label" htmlFor="photo-album">Álbum</label>
                   <select

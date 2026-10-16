@@ -64,7 +64,7 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-brand-50">
       <main className="mx-auto max-w-3xl px-4 py-8">
-        <h1 className="font-display text-3xl font-semibold text-ink-900">Mi perfil</h1>
+        <h1 className="font-display text-3xl font-light tracking-tight text-ink-900">Mi perfil</h1>
         <p className="text-sm text-stone-600">
           Actualiza tus datos personales y tu contraseña.
         </p>
@@ -85,7 +85,7 @@ export default function Profile() {
             {(user?.name || '?').charAt(0).toUpperCase()}
           </div>
           <div>
-            <p className="font-display text-2xl font-semibold text-ink-900">{user?.name}</p>
+            <p className="font-display text-2xl font-normal text-ink-900">{user?.name}</p>
             <p className="text-sm text-stone-600">{user?.email}</p>
             <span className="badge mt-1 bg-brand-100 text-brand-700">
               {ROLE_LABEL[user?.role] || user?.role}
@@ -94,7 +94,7 @@ export default function Profile() {
         </section>
 
         <form onSubmit={handleSave} className="card mt-6 space-y-4">
-          <h2 className="font-display text-xl font-semibold text-ink-900">Datos personales</h2>
+          <h2 className="font-display text-xl font-normal text-ink-900">Datos personales</h2>
 
           <div>
             <label className="label" htmlFor="profile-name">Nombre completo</label>
@@ -122,7 +122,7 @@ export default function Profile() {
         </form>
 
         <form onSubmit={handlePassword} className="card mt-6 space-y-4">
-          <h2 className="font-display text-xl font-semibold text-ink-900">Cambiar contraseña</h2>
+          <h2 className="font-display text-xl font-normal text-ink-900">Cambiar contraseña</h2>
 
           <div>
             <label className="label" htmlFor="pwd-current">Contraseña actual</label>

@@ -92,7 +92,7 @@ export default function ClientWeddingDetail() {
             <header className="card mt-3">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <h1 className="font-display text-3xl font-semibold text-ink-900">
+                  <h1 className="font-display text-3xl font-light tracking-tight text-ink-900">
                     {wedding.coupleNames}
                   </h1>
                   <p className="text-sm text-stone-600">
@@ -112,7 +112,7 @@ export default function ClientWeddingDetail() {
             {tab === 'tasks' && (
               <section role="tabpanel" id="panel-tasks" aria-labelledby="tab-tasks" className="mt-6 grid gap-6 md:grid-cols-2">
                 <div>
-                  <h2 className="mb-3 font-display text-xl font-semibold text-ink-900">
+                  <h2 className="mb-3 font-display text-xl font-normal text-ink-900">
                     Pendientes ({pending.length})
                   </h2>
                   <div className="space-y-3">
@@ -134,7 +134,7 @@ export default function ClientWeddingDetail() {
                 </div>
 
                 <div>
-                  <h2 className="mb-3 font-display text-xl font-semibold text-ink-900">
+                  <h2 className="mb-3 font-display text-xl font-normal text-ink-900">
                     Completadas ({completed.length})
                   </h2>
                   <div className="space-y-3">
@@ -193,7 +193,7 @@ export default function ClientWeddingDetail() {
                 {albums.map((album) => (
                   <div key={album.id} className="card">
                     <div className="mb-3">
-                      <h2 className="font-display text-xl font-semibold text-ink-900">{album.name}</h2>
+                      <h2 className="font-display text-xl font-normal text-ink-900">{album.name}</h2>
                       {album.description && (
                         <p className="text-sm text-stone-600">{album.description}</p>
                       )}

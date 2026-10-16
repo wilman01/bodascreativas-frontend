@@ -33,7 +33,7 @@ export default function ConfirmDialog({
         aria-describedby={message ? 'confirm-desc' : undefined}
         className="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-soft"
       >
-        <h2 id="confirm-title" className="font-display text-xl font-semibold text-ink-900">
+        <h2 id="confirm-title" className="font-display text-xl font-normal text-ink-900">
           {title}
         </h2>
         {message && (

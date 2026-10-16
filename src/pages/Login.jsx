@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import Wordmark from '../components/Wordmark.jsx';
 
 export default function Login() {
   const { login, user } = useAuth();
@@ -34,29 +35,17 @@ export default function Login() {
 
   return (
     <main className="grid min-h-screen lg:grid-cols-2">
-      <section className="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-br from-brand-600 via-brand-700 to-brand-900 p-12 text-white lg:flex">
-        <svg
+      <section className="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-br from-brand-600 via-brand-700 to-ink-800 p-12 text-white lg:flex">
+        <img
+          src="/isotipo-white.png"
+          alt=""
           aria-hidden="true"
-          viewBox="0 0 200 160"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          className="pointer-events-none absolute -right-16 top-1/2 h-[28rem] w-[34rem] -translate-y-1/2 text-white/10"
-        >
-          <path d="M100 150C40 120 8 88 12 56 16 26 50 14 74 30c14 10 20 24 26 40 6-16 12-30 26-40 24-16 58-4 62 26 4 32-28 64-88 94Z" />
-          <path d="M120 140c38-22 60-44 58-66-2-20-24-28-40-18-9 6-13 15-16 26-4-10-9-19-19-24-15-8-33 0-35 16" />
-        </svg>
-        <div className="relative flex items-center gap-3">
-          <img src="/logo.png" alt="" className="h-14 w-14 rounded-full bg-white object-contain p-1 ring-2 ring-gold-300/60" />
-          <div>
-            <p className="font-display text-2xl font-semibold leading-tight">Bodas Creativas</p>
-            <p className="text-[0.65rem] uppercase tracking-[0.28em] text-gold-200">Wedding &amp; Event Planner</p>
-          </div>
-        </div>
+          className="pointer-events-none absolute -right-24 top-1/2 w-[34rem] max-w-none -translate-y-1/2 opacity-[0.07]"
+        />
+        <img src="/logo-white.png" alt="Bodas Creativas — Wedding & Event Planner" className="relative w-64" />
         <div className="relative">
-          <p className="font-script text-3xl text-gold-200">¡Felicitaciones, pareja!</p>
-          <h1 className="mt-2 font-display text-5xl font-semibold leading-tight">
+          <p className="text-xs font-normal uppercase tracking-[0.32em] text-gold-200">¡Felicitaciones, pareja!</p>
+          <h1 className="mt-4 font-display text-5xl font-extralight tracking-tight leading-tight">
             Cada boda, una historia distinta.
           </h1>
           <p className="mt-4 max-w-md text-white/90">
@@ -68,11 +57,11 @@ export default function Login() {
 
       <section className="flex items-center justify-center p-6 sm:p-12">
         <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-5">
-          <img src="/logo.png" alt="Bodas Creativas" className="mx-auto h-32 w-auto object-contain lg:hidden" />
+          <img src="/logo.png" alt="Bodas Creativas — Wedding & Event Planner" className="mx-auto w-52 lg:hidden" />
 
           <div>
             <p className="eyebrow">Bienvenidos</p>
-            <h2 className="mt-1 font-display text-4xl font-semibold text-ink-900">Iniciar sesión</h2>
+            <h2 className="mt-1 font-display text-4xl font-extralight tracking-tight text-ink-900">Iniciar sesión</h2>
             <p className="mt-1 text-sm text-stone-600">
               Accede con tu cuenta de planner o de pareja.
             </p>

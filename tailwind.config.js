@@ -1,23 +1,25 @@
 /** @type {import('tailwindcss').Config} */
-// Paleta inspirada en la identidad de Bodas Creativas:
-// carmesí del corazón principal (#960C1C) y marrón vino del segundo corazón (#5A1A14),
-// sobre fondos marfil cálidos y acentos champagne.
+// Paleta y tipografía según el Manual de Identidad Visual de Bodas Creativas:
+// - Primario: Pantone 7627 C · #AA2D2A (brand-600)
+// - Secundario: Pantone 483 C · #683025 (ink-800)
+// - Tipografía: Helvetica Neue Regular / UltraLight
+// Los acentos champagne (gold) provienen de la fotografía de marca (confeti dorado).
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
         brand: {
-          50: '#fcf7f5',
-          100: '#f7e9e6',
-          200: '#efd2cd',
-          300: '#e2aaa3',
-          400: '#cc6e68',
-          500: '#b3333b',
-          600: '#960c1c',
-          700: '#7d0a18',
-          800: '#650b15',
-          900: '#4c0a11',
+          50: '#fcf7f6',
+          100: '#f8e8e6',
+          200: '#f0cfcb',
+          300: '#e3a6a0',
+          400: '#d06e67',
+          500: '#bd4641',
+          600: '#aa2d2a',
+          700: '#8e2523',
+          800: '#73201e',
+          900: '#5a1b19',
         },
         gold: {
           100: '#f8f1e4',
@@ -30,18 +32,18 @@ export default {
           800: '#6a4c21',
         },
         ink: {
-          700: '#5a3a35',
-          800: '#4a231e',
-          900: '#3a1612',
+          700: '#7a4136',
+          800: '#683025',
+          900: '#4d2219',
         },
       },
       fontFamily: {
-        display: ['"Cormorant Infant"', 'serif'],
-        script: ['"Great Vibes"', 'cursive'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        // Helvetica Neue donde esté instalada (macOS/iOS); Inter como equivalente web.
+        display: ['"Helvetica Neue"', 'Inter', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: ['"Helvetica Neue"', 'Inter', 'Helvetica', 'Arial', 'sans-serif'],
       },
       boxShadow: {
-        soft: '0 10px 40px -12px rgba(74, 35, 30, 0.22)',
+        soft: '0 10px 40px -12px rgba(104, 48, 37, 0.22)',
       },
     },
   },

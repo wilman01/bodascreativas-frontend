@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useFocusTrap } from '../hooks/useFocusTrap.js';
+import Wordmark from './Wordmark.jsx';
 
 const ROLE_LABEL = { admin: 'Wedding Planner', client: 'Pareja' };
 
@@ -57,12 +58,9 @@ function SidebarContent({ onNavigate }) {
 
   return (
     <>
-      <div className="flex h-16 items-center gap-3 border-b border-brand-100 px-5">
-        <img src="/logo.png" alt="" className="h-10 w-10 rounded-full bg-white object-contain p-0.5 ring-1 ring-brand-200" />
-        <div className="min-w-0">
-          <p className="truncate font-display text-xl font-semibold leading-tight text-ink-900">Bodas Creativas</p>
-          <p className="eyebrow whitespace-nowrap !text-[0.58rem] !tracking-[0.12em]">Wedding &amp; Event Planner</p>
-        </div>
+      <div className="flex h-20 items-center gap-3 border-b border-brand-100 px-5">
+        <img src="/isotipo.png" alt="" className="h-10 w-auto shrink-0" />
+        <Wordmark size="sm" />
       </div>
 
       <nav aria-label="Menú principal" className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
@@ -142,8 +140,8 @@ export default function DashboardLayout() {
           </svg>
         </button>
         <span className="flex items-center gap-2">
-          <img src="/logo.png" alt="" className="h-8 w-8 object-contain" />
-          <span className="font-display text-lg font-semibold text-ink-900">Bodas Creativas</span>
+          <img src="/isotipo.png" alt="" className="h-7 w-auto" />
+          <Wordmark size="sm" tagline={false} />
         </span>
         <span className="w-9" />
       </header>
